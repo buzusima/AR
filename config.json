@@ -1,0 +1,162 @@
+{
+  "mt5": {
+    "login": 123456789,
+    "password": "YourPassword",
+    "server": "MetaQuotes-Demo",
+    "timeout": 60000,
+    "auto_login": true,
+    "retry_attempts": 3,
+    "retry_delay": 5
+  },
+  
+  "position_sizing": {
+    "risk_percent": 2.0,
+    "max_lot_size": 1.0,
+    "min_lot_size": 0.01,
+    "dynamic_sizing": true,
+    "balance_multiplier": 1.0,
+    "volatility_adjustment": true,
+    "atr_period": 14,
+    "max_risk_per_pair": 5.0,
+    "emergency_stop_percent": 10.0
+  },
+  
+  "arbitrage": {
+    "currency_pairs": [
+      "EURUSD", "GBPUSD", "EURGBP",
+      "USDJPY", "EURJPY", "GBPJPY",
+      "USDCHF", "EURCHF", "GBPCHF",
+      "AUDUSD", "NZDUSD", "AUDNZD"
+    ],
+    "major_triangles": [
+      ["EURUSD", "GBPUSD", "EURGBP"],
+      ["USDJPY", "EURJPY", "EURUSD"],
+      ["USDJPY", "GBPJPY", "GBPUSD"],
+      ["USDCHF", "EURCHF", "EURUSD"]
+    ],
+    "min_spread_pips": 3,
+    "max_spread_pips": 50,
+    "min_profit_pips": 5,
+    "max_positions_per_pair": 3,
+    "max_total_positions": 10,
+    "correlation_threshold": 0.7,
+    "scan_interval_ms": 500,
+    "entry_conditions": {
+      "loose_entry": true,
+      "min_confidence": 0.6,
+      "allow_negative_swap": true,
+      "ignore_news_times": false
+    }
+  },
+  
+  "profit_management": {
+    "individual_tp": {
+      "method": "pips",
+      "tp_pips": 15,
+      "tp_percent": 3.0,
+      "trailing_stop": true,
+      "trailing_distance": 10
+    },
+    "portfolio_tp": {
+      "enable_cross_pair": true,
+      "net_profit_target": 50,
+      "daily_profit_target": 200,
+      "correlation_hedge": true,
+      "smart_closing": true,
+      "profit_lock_percent": 70
+    },
+    "cross_pair_rules": {
+      "hedge_correlation_min": 0.8,
+      "profit_loss_ratio": 2.0,
+      "max_hedge_positions": 5,
+      "auto_hedge_loss_pips": 20
+    }
+  },
+  
+  "recovery_system": {
+    "enable_recovery": true,
+    "methods": {
+      "martingale": {
+        "enable": true,
+        "multiplier": 1.5,
+        "max_levels": 3,
+        "reset_on_profit": true
+      },
+      "grid": {
+        "enable": true,
+        "step_pips": 15,
+        "max_levels": 5,
+        "lot_multiplier": 1.2
+      },
+      "hedging": {
+        "enable": true,
+        "hedge_ratio": 1.0,
+        "partial_hedge": 0.5,
+        "auto_hedge_drawdown": 100
+      },
+      "correlation": {
+        "enable": true,
+        "min_correlation": 0.75,
+        "hedge_strength": 0.8,
+        "analysis_period": 100
+      }
+    },
+    "stop_loss": {
+      "individual_sl_pips": 50,
+      "portfolio_sl_amount": 500,
+      "max_drawdown_percent": 15,
+      "emergency_close_all": 1000
+    }
+  },
+  
+  "gui_settings": {
+    "theme": "dark",
+    "update_interval_ms": 1000,
+    "show_charts": true,
+    "position_columns": [
+      "Symbol", "Type", "Lots", "Open", "Current", "Pips", "Profit", "Time"
+    ],
+    "alerts": {
+      "sound_alerts": true,
+      "popup_alerts": false,
+      "profit_alert": 100,
+      "loss_alert": -50
+    },
+    "window": {
+      "width": 1200,
+      "height": 800,
+      "resizable": true,
+      "always_on_top": false
+    }
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "file_path": "logs/arbitrage.log",
+    "max_file_size_mb": 10,
+    "backup_count": 5,
+    "log_trades": true,
+    "log_signals": true,
+    "log_errors": true
+  },
+  
+  "circuit_breakers": {
+    "max_daily_loss": -300,
+    "max_consecutive_losses": 5,
+    "max_positions_total": 15,
+    "max_lot_size_total": 5.0,
+    "pause_on_drawdown": -200,
+    "auto_resume_profit": 50
+  },
+  
+  "market_hours": {
+    "trading_sessions": {
+      "asian": {"start": "00:00", "end": "09:00"},
+      "european": {"start": "08:00", "end": "17:00"},
+      "american": {"start": "13:00", "end": "22:00"}
+    },
+    "avoid_news_minutes": 30,
+    "weekend_trading": false,
+    "holiday_trading": false
+  }
+}

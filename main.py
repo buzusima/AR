@@ -5,17 +5,25 @@ import time
 import json
 from datetime import datetime
 from mt5_connection import MT5Connection
+try:
+    from arbitrage_engine import ArbitrageEngine
+    from recovery_system import RecoverySystem
+    ENGINES_AVAILABLE = True
+except ImportError:
+    ENGINES_AVAILABLE = False
 import logging
 
 class TriangularArbitrageGUI:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("🎯 Triangular Arbitrage System")
+        self.root.title("Triangular Arbitrage System")
         self.root.geometry("1200x800")
         self.root.configure(bg='#2b2b2b')
         
         # Initialize components
         self.mt5_conn = None
+        self.arbitrage_engine = None
+        self.recovery_system = None
         self.system_running = False
         self.update_thread = None
         
@@ -33,7 +41,7 @@ class TriangularArbitrageGUI:
         
         # Handle window close
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
-    
+        
     def load_config(self):
         """Load configuration"""
         try:
@@ -50,6 +58,41 @@ class TriangularArbitrageGUI:
         except Exception as e:
             messagebox.showerror("MT5 Error", f"Failed to initialize MT5: {e}")
     
+    def init_arbitrage_engine(self):
+        """Initialize Arbitrage Engine"""
+        try:
+            if ENGINES_AVAILABLE and self.mt5_conn and self.mt5_conn.connected:
+                self.arbitrage_engine = ArbitrageEngine(self.mt5_conn)
+                
+                # Set up callbacks for GUI updates
+                self.arbitrage_engine.set_callbacks(
+                    signal_callback=self.on_arbitrage_signal,
+                    trade_callback=self.on_trade_executed,
+                    error_callback=self.on_arbitrage_error
+                )
+                self.log_message("Arbitrage engine initialized")
+            else:
+                self.log_message("Cannot initialize arbitrage engine - MT5 not connected or engines not available")
+        except Exception as e:
+            self.log_message(f"Error initializing arbitrage engine: {e}")
+    
+    def init_recovery_system(self):
+        """Initialize Recovery System"""
+        try:
+            if ENGINES_AVAILABLE and self.mt5_conn and self.mt5_conn.connected:
+                self.recovery_system = RecoverySystem(self.mt5_conn)
+                
+                # Set up callbacks
+                self.recovery_system.set_callbacks(
+                    recovery_callback=self.on_recovery_action,
+                    error_callback=self.on_recovery_error
+                )
+                self.log_message("Recovery system initialized")
+            else:
+                self.log_message("Cannot initialize recovery system - MT5 not connected or engines not available")
+        except Exception as e:
+            self.log_message(f"Error initializing recovery system: {e}")
+    
     def create_widgets(self):
         """Create all GUI widgets"""
         # Create notebook for tabs
@@ -65,14 +108,14 @@ class TriangularArbitrageGUI:
     def create_dashboard_tab(self):
         """Create main dashboard tab"""
         self.dashboard_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.dashboard_frame, text="📊 Dashboard")
+        self.notebook.add(self.dashboard_frame, text="Dashboard")
         
         # Connection Status Frame
-        conn_frame = ttk.LabelFrame(self.dashboard_frame, text="🔗 MT5 Connection Status")
+        conn_frame = ttk.LabelFrame(self.dashboard_frame, text="MT5 Connection Status")
         conn_frame.pack(fill='x', padx=10, pady=5)
         
         # Connection status labels
-        self.conn_status_label = ttk.Label(conn_frame, text="❌ Disconnected", font=('Arial', 12, 'bold'))
+        self.conn_status_label = ttk.Label(conn_frame, text="Disconnected", font=('Arial', 12, 'bold'))
         self.conn_status_label.pack(pady=5)
         
         self.conn_details_label = ttk.Label(conn_frame, text="Connection details will appear here")
@@ -82,17 +125,17 @@ class TriangularArbitrageGUI:
         conn_btn_frame = ttk.Frame(conn_frame)
         conn_btn_frame.pack(pady=5)
         
-        self.connect_btn = ttk.Button(conn_btn_frame, text="🔌 Connect MT5", command=self.connect_mt5)
+        self.connect_btn = ttk.Button(conn_btn_frame, text="Connect MT5", command=self.connect_mt5)
         self.connect_btn.pack(side='left', padx=5)
         
-        self.disconnect_btn = ttk.Button(conn_btn_frame, text="🔌 Disconnect", command=self.disconnect_mt5, state='disabled')
+        self.disconnect_btn = ttk.Button(conn_btn_frame, text="Disconnect", command=self.disconnect_mt5, state='disabled')
         self.disconnect_btn.pack(side='left', padx=5)
         
-        self.test_btn = ttk.Button(conn_btn_frame, text="🧪 Test Connection", command=self.test_connection)
+        self.test_btn = ttk.Button(conn_btn_frame, text="Test Connection", command=self.test_connection)
         self.test_btn.pack(side='left', padx=5)
         
         # Account Info Frame
-        account_frame = ttk.LabelFrame(self.dashboard_frame, text="💰 Account Information")
+        account_frame = ttk.LabelFrame(self.dashboard_frame, text="Account Information")
         account_frame.pack(fill='x', padx=10, pady=5)
         
         # Account info grid
@@ -117,7 +160,7 @@ class TriangularArbitrageGUI:
         self.margin_label.grid(row=1, column=3, sticky='w', padx=5)
         
         # Position Sizing Frame
-        sizing_frame = ttk.LabelFrame(self.dashboard_frame, text="📏 Position Sizing Controls")
+        sizing_frame = ttk.LabelFrame(self.dashboard_frame, text="Position Sizing Controls")
         sizing_frame.pack(fill='x', padx=10, pady=5)
         
         sizing_grid = ttk.Frame(sizing_frame)
@@ -142,22 +185,27 @@ class TriangularArbitrageGUI:
         self.dynamic_check = ttk.Checkbutton(sizing_grid, text="Dynamic Sizing", variable=self.dynamic_var)
         self.dynamic_check.grid(row=1, column=2, padx=5)
         
+        # Enable trading checkbox (NEW)
+        self.enable_trading_var = tk.BooleanVar(value=False)  # Default to False for safety
+        self.enable_trading_check = ttk.Checkbutton(sizing_grid, text="Enable Live Trading", variable=self.enable_trading_var)
+        self.enable_trading_check.grid(row=2, column=0, columnspan=2, sticky='w', padx=5)
+        
         sizing_grid.columnconfigure(1, weight=1)
         
         # System Control Frame
-        control_frame = ttk.LabelFrame(self.dashboard_frame, text="🎛️ System Control")
+        control_frame = ttk.LabelFrame(self.dashboard_frame, text="System Control")
         control_frame.pack(fill='x', padx=10, pady=5)
         
         control_grid = ttk.Frame(control_frame)
         control_grid.pack(fill='x', padx=10, pady=5)
         
-        self.start_btn = ttk.Button(control_grid, text="🚀 Start System", command=self.start_system, state='disabled')
+        self.start_btn = ttk.Button(control_grid, text="Start System", command=self.start_system, state='disabled')
         self.start_btn.pack(side='left', padx=5)
         
-        self.stop_btn = ttk.Button(control_grid, text="⏹️ Stop System", command=self.stop_system, state='disabled')
+        self.stop_btn = ttk.Button(control_grid, text="Stop System", command=self.stop_system, state='disabled')
         self.stop_btn.pack(side='left', padx=5)
         
-        self.emergency_btn = ttk.Button(control_grid, text="🚨 Emergency Stop", command=self.emergency_stop, state='disabled')
+        self.emergency_btn = ttk.Button(control_grid, text="Emergency Stop", command=self.emergency_stop, state='disabled')
         self.emergency_btn.pack(side='left', padx=5)
         
         # Status indicator
@@ -165,7 +213,7 @@ class TriangularArbitrageGUI:
         self.status_label.pack(side='right', padx=5)
         
         # Market Data Frame
-        market_frame = ttk.LabelFrame(self.dashboard_frame, text="📈 Market Data")
+        market_frame = ttk.LabelFrame(self.dashboard_frame, text="Market Data")
         market_frame.pack(fill='both', expand=True, padx=10, pady=5)
         
         # Market data treeview
@@ -185,7 +233,7 @@ class TriangularArbitrageGUI:
     def create_positions_tab(self):
         """Create positions tab"""
         self.positions_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.positions_frame, text="📋 Positions")
+        self.notebook.add(self.positions_frame, text="Positions")
         
         # Positions treeview
         pos_columns = ('Ticket', 'Symbol', 'Type', 'Lots', 'Open Price', 'Current', 'Pips', 'Profit', 'Time')
@@ -205,14 +253,14 @@ class TriangularArbitrageGUI:
         pos_btn_frame = ttk.Frame(self.positions_frame)
         pos_btn_frame.pack(side='bottom', fill='x', padx=10, pady=5)
         
-        ttk.Button(pos_btn_frame, text="🔄 Refresh", command=self.refresh_positions).pack(side='left', padx=5)
-        ttk.Button(pos_btn_frame, text="❌ Close Selected", command=self.close_selected_position).pack(side='left', padx=5)
-        ttk.Button(pos_btn_frame, text="❌ Close All", command=self.close_all_positions).pack(side='left', padx=5)
+        ttk.Button(pos_btn_frame, text="Refresh", command=self.refresh_positions).pack(side='left', padx=5)
+        ttk.Button(pos_btn_frame, text="Close Selected", command=self.close_selected_position).pack(side='left', padx=5)
+        ttk.Button(pos_btn_frame, text="Close All", command=self.close_all_positions).pack(side='left', padx=5)
     
     def create_settings_tab(self):
         """Create settings tab"""
         self.settings_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.settings_frame, text="⚙️ Settings")
+        self.notebook.add(self.settings_frame, text="Settings")
         
         # Settings will be added here
         ttk.Label(self.settings_frame, text="Settings configuration will be implemented here", 
@@ -221,7 +269,7 @@ class TriangularArbitrageGUI:
     def create_log_tab(self):
         """Create log tab"""
         self.log_frame = ttk.Frame(self.notebook)
-        self.notebook.add(self.log_frame, text="📝 Log")
+        self.notebook.add(self.log_frame, text="Log")
         
         # Log text area
         self.log_text = scrolledtext.ScrolledText(self.log_frame, wrap=tk.WORD, height=30)
@@ -231,16 +279,16 @@ class TriangularArbitrageGUI:
         log_btn_frame = ttk.Frame(self.log_frame)
         log_btn_frame.pack(side='bottom', fill='x', padx=10, pady=5)
         
-        ttk.Button(log_btn_frame, text="🗑️ Clear Log", command=self.clear_log).pack(side='left', padx=5)
-        ttk.Button(log_btn_frame, text="💾 Save Log", command=self.save_log).pack(side='left', padx=5)
+        ttk.Button(log_btn_frame, text="Clear Log", command=self.clear_log).pack(side='left', padx=5)
+        ttk.Button(log_btn_frame, text="Save Log", command=self.save_log).pack(side='left', padx=5)
     
     def connect_mt5(self):
         """Connect to MT5"""
         try:
-            self.log_message("🔌 Attempting to connect to MT5...")
+            self.log_message("Attempting to connect to MT5...")
             
             if self.mt5_conn and self.mt5_conn.connect():
-                self.log_message("✅ Successfully connected to MT5!")
+                self.log_message("Successfully connected to MT5!")
                 self.connect_btn.config(state='disabled')
                 self.disconnect_btn.config(state='normal')
                 self.start_btn.config(state='normal')
@@ -248,17 +296,21 @@ class TriangularArbitrageGUI:
                 
                 # Start monitoring
                 if self.mt5_conn.start_monitoring():
-                    self.log_message("📊 Started MT5 monitoring thread")
+                    self.log_message("Started MT5 monitoring thread")
+                
+                # Initialize other systems
+                self.init_arbitrage_engine()
+                self.init_recovery_system()
                 
                 self.update_connection_status()
             else:
-                self.log_message("❌ Failed to connect to MT5")
+                self.log_message("Failed to connect to MT5")
                 messagebox.showerror("Connection Failed", "Could not connect to MT5. Please check:\n"
                                    "1. MT5 is installed and running\n"
-                                   "2. Login credentials in config.json\n"
-                                   "3. Demo account is active")
+                                   "2. You are logged into an account\n"
+                                   "3. MT5 is connected to broker")
         except Exception as e:
-            self.log_message(f"❌ Connection error: {e}")
+            self.log_message(f"Connection error: {e}")
             messagebox.showerror("Connection Error", f"Error connecting to MT5: {e}")
     
     def disconnect_mt5(self):
@@ -266,7 +318,7 @@ class TriangularArbitrageGUI:
         try:
             if self.mt5_conn:
                 self.mt5_conn.disconnect()
-                self.log_message("🔌 Disconnected from MT5")
+                self.log_message("Disconnected from MT5")
             
             self.connect_btn.config(state='normal')
             self.disconnect_btn.config(state='disabled')
@@ -276,78 +328,116 @@ class TriangularArbitrageGUI:
             
             self.update_connection_status()
         except Exception as e:
-            self.log_message(f"❌ Disconnect error: {e}")
+            self.log_message(f"Disconnect error: {e}")
     
     def test_connection(self):
         """Test MT5 connection and display diagnostics"""
-        self.log_message("🧪 Testing MT5 connection...")
+        self.log_message("Testing MT5 connection...")
         
         try:
             import MetaTrader5 as mt5
             
             # Test MT5 initialization
             if not mt5.initialize():
-                self.log_message("❌ MT5 initialize() failed")
+                self.log_message("MT5 initialize() failed")
                 error = mt5.last_error()
-                self.log_message(f"❌ Last error: {error}")
+                self.log_message(f"Last error: {error}")
                 return
             
-            self.log_message("✅ MT5 initialize() successful")
+            self.log_message("MT5 initialize() successful")
             
             # Test terminal info
             terminal_info = mt5.terminal_info()
             if terminal_info:
-                self.log_message(f"📊 Terminal: {terminal_info.name}")
-                self.log_message(f"📊 Path: {terminal_info.path}")
-                self.log_message(f"📊 Connected: {terminal_info.connected}")
+                self.log_message(f"Terminal: {terminal_info.name}")
+                self.log_message(f"Connected: {terminal_info.connected}")
             
-            # Test login
-            config = self.config.get('mt5', {})
-            login = config.get('login')
-            password = config.get('password')
-            server = config.get('server')
-            
-            if all([login, password, server]):
-                self.log_message(f"🔐 Attempting login to {server}...")
-                if mt5.login(login, password, server):
-                    self.log_message("✅ Login successful!")
-                    
-                    # Test account info
-                    account = mt5.account_info()
-                    if account:
-                        self.log_message(f"💰 Account: {account.name}")
-                        self.log_message(f"💰 Balance: ${account.balance:.2f}")
-                        self.log_message(f"💰 Server: {account.server}")
-                else:
-                    error = mt5.last_error()
-                    self.log_message(f"❌ Login failed: {error}")
+            # Test account info
+            account = mt5.account_info()
+            if account:
+                self.log_message(f"Account: {account.name}")
+                self.log_message(f"Balance: ${account.balance:.2f}")
+                self.log_message(f"Server: {account.server}")
             else:
-                self.log_message("❌ Missing login credentials in config.json")
+                self.log_message("No account logged in")
             
             mt5.shutdown()
             
         except ImportError:
-            self.log_message("❌ MetaTrader5 module not installed")
+            self.log_message("MetaTrader5 module not installed")
             messagebox.showerror("Missing Module", "MetaTrader5 module is not installed.\n"
                                "Install it using: pip install MetaTrader5")
         except Exception as e:
-            self.log_message(f"❌ Test error: {e}")
+            self.log_message(f"Test error: {e}")
     
     def start_system(self):
         """Start the arbitrage system"""
-        self.system_running = True
-        self.start_btn.config(state='disabled')
-        self.stop_btn.config(state='normal')
-        self.status_label.config(text="System: Running", foreground='green')
-        self.log_message("🚀 Arbitrage system started")
+        try:
+            if not self.mt5_conn or not self.mt5_conn.connected:
+                messagebox.showerror("Error", "MT5 not connected!")
+                return
+            
+            # Check if live trading is enabled
+            if not self.enable_trading_var.get():
+                self.log_message("DEMO MODE: System started in demo mode (no real trades)")
+                messagebox.showinfo("Demo Mode", "System is starting in DEMO mode.\nNo real trades will be placed.\nCheck 'Enable Live Trading' to trade with real money.")
+            else:
+                # Double confirmation for live trading
+                if not messagebox.askyesno("Live Trading Warning", 
+                    "WARNING: You are about to start LIVE TRADING!\n\n"
+                    "This will place real trades with real money.\n"
+                    "Make sure you understand the risks.\n\n"
+                    "Continue with LIVE trading?"):
+                    return
+                self.log_message("LIVE TRADING: System started with real money trading ENABLED")
+            
+            # Start arbitrage engine
+            if self.arbitrage_engine:
+                # Set trading mode in engine
+                self.arbitrage_engine.demo_mode = not self.enable_trading_var.get()
+                if self.arbitrage_engine.start_engine():
+                    self.log_message("Arbitrage engine started")
+            
+            # Start recovery system
+            if self.recovery_system:
+                # Set trading mode in recovery system
+                self.recovery_system.demo_mode = not self.enable_trading_var.get()
+                if self.recovery_system.start_recovery_system():
+                    self.log_message("Recovery system started")
+            
+            self.system_running = True
+            self.start_btn.config(state='disabled')
+            self.stop_btn.config(state='normal')
+            self.status_label.config(text="System: Running", foreground='green')
+            
+            mode = "LIVE" if self.enable_trading_var.get() else "DEMO"
+            self.log_message(f"Full arbitrage system started in {mode} mode")
+            
+        except Exception as e:
+            self.log_message(f"Error starting system: {e}")
+            messagebox.showerror("System Error", f"Failed to start system: {e}")
     
     def stop_system(self):
         """Stop the arbitrage system"""
-        self.system_running = False
-        self.start_btn.config(state='normal')
-        self.stop_btn.config(state='disabled')
-        self.status_label.config(text="System: Stopped", foreground='red')
-        self.log_message("⏹️ Arbitrage system stopped")
+        try:
+            # Stop arbitrage engine
+            if self.arbitrage_engine:
+                self.arbitrage_engine.stop_engine()
+                self.log_message("Arbitrage engine stopped")
+            
+            # Stop recovery system
+            if self.recovery_system:
+                self.recovery_system.stop_recovery_system()
+                self.log_message("Recovery system stopped")
+            
+            self.system_running = False
+            self.start_btn.config(state='normal')
+            self.stop_btn.config(state='disabled')
+            self.status_label.config(text="System: Stopped", foreground='red')
+            self.log_message("Full arbitrage system stopped")
+            
+        except Exception as e:
+            self.log_message(f"Error stopping system: {e}")
     
     def emergency_stop(self):
         """Emergency stop - close all positions"""
@@ -355,10 +445,10 @@ class TriangularArbitrageGUI:
             try:
                 if self.mt5_conn:
                     closed = self.mt5_conn.close_all_positions()
-                    self.log_message(f"🚨 Emergency stop: Closed {closed} positions")
+                    self.log_message(f"Emergency stop: Closed {closed} positions")
                 self.stop_system()
             except Exception as e:
-                self.log_message(f"❌ Emergency stop error: {e}")
+                self.log_message(f"Emergency stop error: {e}")
     
     def refresh_positions(self):
         """Refresh positions display"""
@@ -399,7 +489,7 @@ class TriangularArbitrageGUI:
                 ))
         
         except Exception as e:
-            self.log_message(f"❌ Error refreshing positions: {e}")
+            self.log_message(f"Error refreshing positions: {e}")
     
     def close_selected_position(self):
         """Close selected position"""
@@ -414,12 +504,12 @@ class TriangularArbitrageGUI:
         if messagebox.askyesno("Close Position", f"Close position {ticket}?"):
             try:
                 if self.mt5_conn and self.mt5_conn.close_position(int(ticket)):
-                    self.log_message(f"✅ Closed position {ticket}")
+                    self.log_message(f"Closed position {ticket}")
                     self.refresh_positions()
                 else:
-                    self.log_message(f"❌ Failed to close position {ticket}")
+                    self.log_message(f"Failed to close position {ticket}")
             except Exception as e:
-                self.log_message(f"❌ Error closing position: {e}")
+                self.log_message(f"Error closing position: {e}")
     
     def close_all_positions(self):
         """Close all positions"""
@@ -427,21 +517,21 @@ class TriangularArbitrageGUI:
             try:
                 if self.mt5_conn:
                     closed = self.mt5_conn.close_all_positions()
-                    self.log_message(f"✅ Closed {closed} positions")
+                    self.log_message(f"Closed {closed} positions")
                     self.refresh_positions()
             except Exception as e:
-                self.log_message(f"❌ Error closing positions: {e}")
+                self.log_message(f"Error closing positions: {e}")
     
     def update_connection_status(self):
         """Update connection status display"""
         if self.mt5_conn and self.mt5_conn.connected:
-            self.conn_status_label.config(text="✅ Connected", foreground='green')
+            self.conn_status_label.config(text="Connected", foreground='green')
             status = self.mt5_conn.get_connection_status()
             details = f"Account: {self.mt5_conn.account_info.get('name', 'Unknown') if self.mt5_conn.account_info else 'Not logged in'}"
             details += f" | Last Update: {status.get('last_update', 'Never')}"
             self.conn_details_label.config(text=details)
         else:
-            self.conn_status_label.config(text="❌ Disconnected", foreground='red')
+            self.conn_status_label.config(text="Disconnected", foreground='red')
             self.conn_details_label.config(text="Not connected to MT5")
     
     def update_account_info(self):
@@ -462,7 +552,7 @@ class TriangularArbitrageGUI:
             self.margin_label.config(text=f"${summary.get('free_margin', 0):.2f}")
             
         except Exception as e:
-            self.log_message(f"❌ Error updating account info: {e}")
+            self.log_message(f"Error updating account info: {e}")
     
     def update_market_data(self):
         """Update market data display"""
@@ -474,28 +564,43 @@ class TriangularArbitrageGUI:
             for item in self.market_tree.get_children():
                 self.market_tree.delete(item)
             
-            # Get market data for configured symbols
-            symbols = self.config.get('arbitrage', {}).get('currency_pairs', [])[:10]  # Limit to 10
+            # Get available symbols from MT5 connection
+            available_symbols = self.mt5_conn.get_available_symbols()
+            if not available_symbols:
+                # Fallback to config symbols if available
+                available_symbols = self.config.get('arbitrage', {}).get('currency_pairs', [])
             
-            for symbol in symbols:
-                tick = self.mt5_conn.get_tick(symbol)
-                if tick:
-                    bid = tick.get('bid', 0)
-                    ask = tick.get('ask', 0)
-                    spread = (ask - bid) * (10000 if 'JPY' not in symbol else 100)
-                    last_time = datetime.fromtimestamp(tick.get('time', 0)).strftime('%H:%M:%S')
-                    
-                    self.market_tree.insert('', 'end', values=(
-                        symbol, f"{bid:.5f}", f"{ask:.5f}", f"{spread:.1f}", last_time
-                    ))
+            # Limit to first 15 symbols for performance
+            symbols_to_show = available_symbols[:15]
+            
+            for symbol in symbols_to_show:
+                try:
+                    tick = self.mt5_conn.get_tick(symbol)
+                    if tick:
+                        bid = tick.get('bid', 0)
+                        ask = tick.get('ask', 0)
+                        
+                        # Calculate spread in pips
+                        if 'JPY' in symbol:
+                            spread_pips = (ask - bid) * 100
+                        else:
+                            spread_pips = (ask - bid) * 10000
+                        
+                        last_time = datetime.fromtimestamp(tick.get('time', 0)).strftime('%H:%M:%S')
+                        
+                        self.market_tree.insert('', 'end', values=(
+                            symbol, 
+                            f"{bid:.5f}", 
+                            f"{ask:.5f}", 
+                            f"{spread_pips:.1f}", 
+                            last_time
+                        ))
+                except Exception as e:
+                    # Skip symbols that cause errors
+                    continue
         
         except Exception as e:
-            self.log_message(f"❌ Error updating market data: {e}")
-    
-    def update_risk_label(self, *args):
-        """Update risk percentage label"""
-        risk_pct = self.risk_var.get()
-        self.risk_label.config(text=f"{risk_pct:.1f}%")
+            self.log_message(f"Error updating market data: {e}")
     
     def start_update_loop(self):
         """Start the GUI update loop"""
@@ -508,15 +613,38 @@ class TriangularArbitrageGUI:
                         self.root.after(0, self.update_market_data)
                         self.root.after(0, self.refresh_positions)
                     
+                    # Update risk label
                     self.root.after(0, lambda: self.risk_label.config(text=f"{self.risk_var.get():.1f}%"))
                     
-                    time.sleep(2)  # Update every 2 seconds
+                    time.sleep(3)  # Update every 3 seconds
                 except Exception as e:
                     print(f"Update loop error: {e}")
                     time.sleep(5)
         
         self.update_thread = threading.Thread(target=update_loop, daemon=True)
         self.update_thread.start()
+    
+    # Callback functions for Arbitrage Engine
+    def on_arbitrage_signal(self, message):
+        """Handle arbitrage signals"""
+        self.log_message(f"SIGNAL: {message}")
+    
+    def on_trade_executed(self, message):
+        """Handle trade execution"""
+        self.log_message(f"TRADE: {message}")
+    
+    def on_arbitrage_error(self, message):
+        """Handle arbitrage errors"""
+        self.log_message(f"ERROR Arbitrage: {message}")
+    
+    # Callback functions for Recovery System
+    def on_recovery_action(self, message):
+        """Handle recovery actions"""
+        self.log_message(f"RECOVERY: {message}")
+    
+    def on_recovery_error(self, message):
+        """Handle recovery errors"""
+        self.log_message(f"ERROR Recovery: {message}")
     
     def log_message(self, message):
         """Add message to log"""
@@ -543,16 +671,18 @@ class TriangularArbitrageGUI:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(self.log_text.get(1.0, tk.END))
             
-            self.log_message(f"💾 Log saved to {filename}")
+            self.log_message(f"Log saved to {filename}")
             messagebox.showinfo("Save Log", f"Log saved to {filename}")
         except Exception as e:
-            self.log_message(f"❌ Error saving log: {e}")
+            self.log_message(f"Error saving log: {e}")
     
     def on_closing(self):
         """Handle window closing"""
         if self.system_running:
             if messagebox.askokcancel("Quit", "System is running. Stop and quit?"):
                 self.stop_system()
+                time.sleep(1)  # Give time for systems to stop
+                
                 if self.mt5_conn:
                     self.mt5_conn.disconnect()
                 self.root.destroy()
@@ -563,8 +693,8 @@ class TriangularArbitrageGUI:
     
     def run(self):
         """Start the GUI"""
-        self.log_message("🎯 Triangular Arbitrage System Started")
-        self.log_message("📋 Please connect to MT5 to begin")
+        self.log_message("Triangular Arbitrage System Started")
+        self.log_message("Please connect to MT5 to begin")
         self.root.mainloop()
 
 if __name__ == "__main__":

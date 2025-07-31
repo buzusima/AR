@@ -1,0 +1,466 @@
+2025-07-31 18:31:48,986 - arbitrage_engine - INFO - Starting arbitrage scanning loop with 2 triangles
+2025-07-31 18:31:49,333 - recovery_system - INFO -  Recovery system started
+2025-07-31 18:31:49,351 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634416.36 pips
+2025-07-31 18:31:49,364 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:49,941 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:50,457 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:51,053 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:51,695 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:52,202 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:52,715 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:53,221 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:53,729 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:54,337 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:54,848 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634295.80 pips
+2025-07-31 18:31:54,853 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:55,369 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:55,905 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:56,795 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:57,303 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:57,815 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:58,322 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:58,829 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:59,336 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:31:59,860 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634295.80 pips
+2025-07-31 18:31:59,866 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:00,374 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:00,880 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:01,386 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:01,893 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:02,400 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:02,906 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:03,416 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:03,923 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:04,429 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:04,933 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634319.34 pips
+2025-07-31 18:32:04,939 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:05,447 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:05,953 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:06,463 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:06,969 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:07,475 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:07,983 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:08,490 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:08,999 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:09,706 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:10,223 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634198.98 pips
+2025-07-31 18:32:10,229 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:10,752 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:11,270 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:11,789 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:32:12,308 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:18,113 - arbitrage_engine - INFO - Starting arbitrage scanning loop with 2 triangles
+2025-07-31 18:44:18,783 - recovery_system - INFO -  Recovery system started
+2025-07-31 18:44:18,822 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634074.75 pips
+2025-07-31 18:44:18,825 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:18,826 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:18,826 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:18,827 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:19,366 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:19,367 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:19,368 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:19,368 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:19,963 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:19,964 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:19,965 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:19,965 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:20,488 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:20,538 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:20,882 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:20,882 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:21,412 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:21,469 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89162
+2025-07-31 18:44:21,486 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:21,487 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:22,068 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:22,108 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:22,140 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:22,140 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:22,737 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:22,822 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:22,823 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:22,823 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:23,359 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:23,513 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:23,514 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:23,514 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:24,614 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634081.48 pips
+2025-07-31 18:44:24,659 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:24,660 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:24,660 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:25,247 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:25,795 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:25,889 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:25,890 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:25,890 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:26,919 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:26,934 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89163
+2025-07-31 18:44:26,934 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:26,934 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:28,144 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:28,290 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89161
+2025-07-31 18:44:28,290 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:28,290 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:29,351 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:29,384 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89161
+2025-07-31 18:44:29,393 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:29,393 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:30,537 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1633876.69 pips
+2025-07-31 18:44:30,910 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:30,914 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:30,914 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:30,915 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:31,420 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:31,634 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:31,634 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:31,634 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:32,162 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:32,270 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:32,271 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:32,271 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:33,339 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:33,385 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89157
+2025-07-31 18:44:33,385 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:33,385 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:33,897 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:33,948 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89157
+2025-07-31 18:44:33,949 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:33,950 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:34,455 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:34,540 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:34,540 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:34,546 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:35,052 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:35,129 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:35,130 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:35,130 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:35,703 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1633959.14 pips
+2025-07-31 18:44:35,706 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:35,707 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:36,292 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:36,292 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:36,816 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:37,000 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:37,000 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:37,000 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:37,518 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:37,735 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:37,736 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:37,736 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:38,242 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:38,336 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:38,341 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:38,341 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:38,847 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:38,894 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:38,899 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:38,899 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:39,406 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:39,471 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89159
+2025-07-31 18:44:39,473 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:39,473 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:40,558 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:40,607 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89159
+2025-07-31 18:44:40,607 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:40,607 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:41,126 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1633984.13 pips
+2025-07-31 18:44:41,191 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:41,192 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:41,743 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:41,744 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:42,248 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:42,322 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:42,340 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:42,340 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:43,048 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:43,232 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:43,291 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:43,291 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:43,919 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:43,924 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:43,924 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:43,940 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:44,444 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:44,635 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:44,636 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:44,637 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:45,143 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:45,478 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:45,541 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:45,541 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:46,574 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1633984.13 pips
+2025-07-31 18:44:46,645 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:46,645 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:46,645 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:46,645 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:47,159 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:47,210 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:47,211 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:47,213 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:48,305 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:48,360 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:44:48,395 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:48,396 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:48,902 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:48,998 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89159
+2025-07-31 18:44:49,052 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:49,052 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:49,577 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:50,163 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89159
+2025-07-31 18:44:50,196 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:50,196 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:50,929 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:51,260 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:44:51,276 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:51,276 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:51,782 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1633977.22 pips
+2025-07-31 18:44:51,956 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:51,956 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:44:51,956 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:51,956 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:52,547 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:52,547 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:44:52,547 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:52,547 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:53,615 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:53,670 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:44:53,671 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:53,671 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:54,178 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:54,239 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89154
+2025-07-31 18:44:54,240 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:54,841 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:55,353 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:55,434 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:44:55,434 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:55,434 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:56,495 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:56,593 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89153
+2025-07-31 18:44:56,608 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:56,608 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:57,114 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634082.71 pips
+2025-07-31 18:44:57,215 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:57,215 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:44:57,215 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:57,215 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:44:57,736 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:44:57,828 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:44:57,828 - arbitrage_engine - ERROR - Trade 1 failed: SELL AUDCAD.v - Order failed
+2025-07-31 18:44:57,828 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:33,889 - arbitrage_engine - INFO - Starting arbitrage scanning loop with 2 triangles
+2025-07-31 18:49:33,904 - arbitrage_engine - INFO - Ready to trade on demo account (virtual money)
+2025-07-31 18:49:34,675 - recovery_system - INFO -  Recovery system started
+2025-07-31 18:49:34,695 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634024.74 pips
+2025-07-31 18:49:34,699 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:34,699 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89148
+2025-07-31 18:49:34,703 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:36,089 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:36,090 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89148
+2025-07-31 18:49:36,093 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:36,690 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:36,700 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:49:37,175 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:38,176 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:38,177 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:49:38,180 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:38,808 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:38,822 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89149
+2025-07-31 18:49:38,826 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:39,331 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:39,796 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89148
+2025-07-31 18:49:40,286 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:41,218 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634096.89 pips
+2025-07-31 18:49:41,228 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:41,229 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89149
+2025-07-31 18:49:41,690 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:42,636 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:42,694 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89150
+2025-07-31 18:49:42,700 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:43,703 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:43,738 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89150
+2025-07-31 18:49:44,406 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:44,970 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:44,971 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89154
+2025-07-31 18:49:47,130 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:48,092 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634128.98 pips
+2025-07-31 18:49:48,102 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:48,105 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89154
+2025-07-31 18:49:48,108 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:49,055 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:49,056 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89155
+2025-07-31 18:49:50,250 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:50,893 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:50,894 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89157
+2025-07-31 18:49:52,319 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:53,323 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634150.07 pips
+2025-07-31 18:49:53,802 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:53,872 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89156
+2025-07-31 18:49:53,877 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:54,411 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:54,412 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89158
+2025-07-31 18:49:54,991 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:56,241 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:56,242 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89154
+2025-07-31 18:49:57,708 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:58,690 - arbitrage_engine - INFO - ARBITRAGE REVERSE: AUDCAD.v-AUDCHF.v-AUDJPY.v = +1634073.65 pips
+2025-07-31 18:49:58,704 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:58,705 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:49:58,708 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:49:59,212 - arbitrage_engine - INFO - Executing 3 trades for arbitrage opportunity
+2025-07-31 18:49:59,213 - arbitrage_engine - INFO - Placing SELL order for AUDCAD.v: 0.44 lots at 0.89151
+2025-07-31 18:49:59,217 - arbitrage_engine - WARNING - Failed to execute reverse arbitrage on AUDCAD.v-AUDCHF.v-AUDJPY.v
+2025-07-31 18:52:33,572 - arbitrage_engine - INFO - Starting arbitrage scanning with 1 triangles
+2025-07-31 18:52:33,572 - arbitrage_engine - INFO - Arbitrage engine started
+2025-07-31 18:52:33,926 - recovery_system - INFO -  Recovery system started
+2025-07-31 18:52:33,938 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.65 pips
+2025-07-31 18:52:33,939 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89175
+2025-07-31 18:52:33,939 - arbitrage_engine - ERROR - FAILED: Order failed - No result
+2025-07-31 18:52:33,939 - arbitrage_engine - WARNING - FAILED: Could not execute forward trade on AUDCAD.v
+2025-07-31 18:52:36,944 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89175
+2025-07-31 18:52:36,945 - arbitrage_engine - ERROR - FAILED: Order failed - No result
+2025-07-31 18:52:36,945 - arbitrage_engine - WARNING - FAILED: Could not execute forward trade on AUDCAD.v
+2025-07-31 18:52:39,946 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.84 pips
+2025-07-31 18:52:39,950 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89176
+2025-07-31 18:52:39,950 - arbitrage_engine - ERROR - FAILED: Order failed - No result
+2025-07-31 18:52:39,950 - arbitrage_engine - WARNING - FAILED: Could not execute forward trade on AUDCAD.v
+2025-07-31 18:52:42,951 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89176
+2025-07-31 18:52:42,952 - arbitrage_engine - ERROR - FAILED: Order failed - No result
+2025-07-31 18:52:42,952 - arbitrage_engine - WARNING - FAILED: Could not execute forward trade on AUDCAD.v
+2025-07-31 18:52:45,953 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.83 pips
+2025-07-31 18:52:45,957 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89176
+2025-07-31 18:52:46,108 - arbitrage_engine - INFO - SUCCESS: Trade executed - Ticket: 24449982
+2025-07-31 18:52:46,108 - arbitrage_engine - INFO - Trade recorded: AUDCAD.v buy - Ticket 24449982
+2025-07-31 18:52:46,108 - arbitrage_engine - INFO - EXECUTED: forward trade on AUDCAD.v for +16937.83 pips
+2025-07-31 18:52:49,119 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89176
+2025-07-31 18:52:49,297 - arbitrage_engine - INFO - SUCCESS: Trade executed - Ticket: 24449994
+2025-07-31 18:52:49,297 - arbitrage_engine - INFO - Trade recorded: AUDCAD.v buy - Ticket 24449994
+2025-07-31 18:52:49,297 - arbitrage_engine - INFO - EXECUTED: forward trade on AUDCAD.v for +16937.83 pips
+2025-07-31 18:52:52,319 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.03 pips
+2025-07-31 18:52:52,319 - arbitrage_engine - INFO - Placing BUY order: AUDCAD.v 0.01 lots at 0.89177
+2025-07-31 18:52:52,500 - arbitrage_engine - INFO - SUCCESS: Trade executed - Ticket: 24449998
+2025-07-31 18:52:52,500 - arbitrage_engine - INFO - Trade recorded: AUDCAD.v buy - Ticket 24449998
+2025-07-31 18:52:52,500 - arbitrage_engine - INFO - EXECUTED: forward trade on AUDCAD.v for +16938.03 pips
+2025-07-31 18:52:58,513 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.03 pips
+2025-07-31 18:53:04,525 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.62 pips
+2025-07-31 18:53:10,541 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.11 pips
+2025-07-31 18:53:16,554 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.11 pips
+2025-07-31 18:53:22,565 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16936.33 pips
+2025-07-31 18:53:28,585 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16935.60 pips
+2025-07-31 18:53:34,620 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.90 pips
+2025-07-31 18:53:40,643 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.19 pips
+2025-07-31 18:53:46,666 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.19 pips
+2025-07-31 18:53:52,693 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.51 pips
+2025-07-31 18:53:58,730 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.50 pips
+2025-07-31 18:54:04,757 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16934.76 pips
+2025-07-31 18:54:10,796 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16936.37 pips
+2025-07-31 18:54:16,829 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.36 pips
+2025-07-31 18:54:22,864 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.36 pips
+2025-07-31 18:54:28,900 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.60 pips
+2025-07-31 18:54:34,924 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.60 pips
+2025-07-31 18:54:40,948 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16936.84 pips
+2025-07-31 18:54:46,982 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.57 pips
+2025-07-31 18:54:53,010 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.90 pips
+2025-07-31 18:54:59,035 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.25 pips
+2025-07-31 18:55:05,063 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.99 pips
+2025-07-31 18:55:11,092 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.86 pips
+2025-07-31 18:55:17,123 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16937.99 pips
+2025-07-31 18:55:23,163 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16938.00 pips
+2025-07-31 18:55:29,199 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.71 pips
+2025-07-31 18:55:35,232 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.90 pips
+2025-07-31 18:55:41,266 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.98 pips
+2025-07-31 18:55:47,295 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.12 pips
+2025-07-31 18:55:53,323 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.06 pips
+2025-07-31 18:55:59,344 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.06 pips
+2025-07-31 18:56:05,380 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16939.86 pips
+2025-07-31 18:56:11,414 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16940.19 pips
+2025-07-31 18:56:17,450 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16941.22 pips
+2025-07-31 18:56:23,480 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16941.16 pips
+2025-07-31 18:56:29,515 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16941.67 pips
+2025-07-31 18:56:35,545 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16942.95 pips
+2025-07-31 18:56:41,575 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16942.95 pips
+2025-07-31 18:56:47,601 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.47 pips
+2025-07-31 18:56:53,632 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.15 pips
+2025-07-31 18:56:59,661 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.48 pips
+2025-07-31 18:57:05,691 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.29 pips
+2025-07-31 18:57:11,721 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.48 pips
+2025-07-31 18:57:17,752 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.42 pips
+2025-07-31 18:57:23,787 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16942.96 pips
+2025-07-31 18:57:29,817 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16943.48 pips
+2025-07-31 18:57:35,848 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16944.59 pips
+2025-07-31 18:57:41,882 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16944.76 pips
+2025-07-31 18:57:47,918 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.41 pips
+2025-07-31 18:57:53,945 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.47 pips
+2025-07-31 18:57:59,967 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.99 pips
+2025-07-31 18:58:06,003 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.24 pips
+2025-07-31 18:58:12,039 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.92 pips
+2025-07-31 18:58:18,069 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.21 pips
+2025-07-31 18:58:24,096 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16945.29 pips
+2025-07-31 18:58:30,117 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.13 pips
+2025-07-31 18:58:36,141 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.08 pips
+2025-07-31 18:58:42,169 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.79 pips
+2025-07-31 18:58:48,195 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16948.47 pips
+2025-07-31 18:58:54,220 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16948.22 pips
+2025-07-31 18:59:00,249 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16948.22 pips
+2025-07-31 18:59:06,282 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.35 pips
+2025-07-31 18:59:12,306 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.17 pips
+2025-07-31 18:59:18,329 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16946.37 pips
+2025-07-31 18:59:24,340 - arbitrage_engine - INFO - SIGNAL: FORWARD AUDCAD.v-AUDCHF.v-AUDJPY.v = +16947.35 pips
+2025-07-31 18:59:30,363 - arbitrage_engine - INFO - Arbitrage engine stopped
+2025-07-31 22:06:26,925 - arbitrage_engine - INFO - Market analysis initialized
+2025-07-31 22:06:31,940 - arbitrage_engine - INFO - Smart scanning started: 0 triangles, 15 pairs
+2025-07-31 22:06:31,940 - arbitrage_engine - INFO - Smart Arbitrage Engine started
+2025-07-31 22:06:32,280 - recovery_system - INFO -  Recovery system started
+2025-07-31 22:10:00,135 - arbitrage_engine - INFO - Market analysis initialized
+2025-07-31 22:10:14,924 - arbitrage_engine - INFO - Smart scanning started: 3 triangles, 15 pairs
+2025-07-31 22:10:14,924 - arbitrage_engine - INFO - Smart Arbitrage Engine started
+2025-07-31 22:10:15,283 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:15,284 - recovery_system - INFO -  Recovery system started
+2025-07-31 22:10:15,309 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58654
+2025-07-31 22:10:15,853 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486055
+2025-07-31 22:10:15,854 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486055 - Confidence 56.0%
+2025-07-31 22:10:15,854 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:16,873 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58654
+2025-07-31 22:10:16,935 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486057
+2025-07-31 22:10:16,935 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486057 - Confidence 56.0%
+2025-07-31 22:10:16,935 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:17,947 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:17,951 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58654
+2025-07-31 22:10:18,140 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486058
+2025-07-31 22:10:18,140 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486058 - Confidence 56.0%
+2025-07-31 22:10:18,140 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:19,144 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58654
+2025-07-31 22:10:19,686 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486059
+2025-07-31 22:10:19,686 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486059 - Confidence 56.0%
+2025-07-31 22:10:19,686 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:20,703 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:20,703 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58654
+2025-07-31 22:10:21,077 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486063
+2025-07-31 22:10:21,078 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486063 - Confidence 56.0%
+2025-07-31 22:10:21,078 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:22,083 - arbitrage_engine - INFO - Smart execution: SELL CADCHF.v 0.01 lots at 0.58655
+2025-07-31 22:10:22,605 - arbitrage_engine - INFO - SUCCESS: Smart trade executed - Ticket: 24486064
+2025-07-31 22:10:22,605 - arbitrage_engine - INFO - Smart trade recorded: CADCHF.v sell - Ticket 24486064 - Confidence 56.0%
+2025-07-31 22:10:22,605 - arbitrage_engine - INFO - EXECUTED: reverse CADCHF.v | -0.63p | 56%
+2025-07-31 22:10:23,620 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:25,650 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:27,673 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:29,705 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:31,741 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:33,777 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:35,802 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:37,828 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:39,864 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:41,906 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:43,930 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:45,965 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:47,999 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:50,029 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:52,065 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:54,088 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:56,131 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:10:58,153 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:11:00,180 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:11:02,213 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:11:04,248 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:11:06,275 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
+2025-07-31 22:11:07,280 - arbitrage_engine - INFO - Smart Arbitrage Engine stopped

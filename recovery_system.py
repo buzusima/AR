@@ -72,9 +72,9 @@ class RecoverySystem:
         self.recovery_thread = threading.Thread(target=self._recovery_loop, daemon=True)
         self.recovery_thread.start()
         
-        self.logger.info("🔄 Recovery system started")
+        self.logger.info(" Recovery system started")
         if self.on_recovery_callback:
-            self.on_recovery_callback("🔄 Recovery system started")
+            self.on_recovery_callback(" Recovery system started")
         
         return True
     

@@ -23,6 +23,12 @@ class MT5Connection:
         self.connection_thread = None
         self.running = False
         
+        # Order filling mode (will be detected)
+        self.preferred_filling = mt5.ORDER_FILLING_IOC
+        
+        # Available symbols cache
+        self.available_symbols = []
+        
         # Setup logging
         self.setup_logging()
         self.logger = logging.getLogger(__name__)
@@ -196,21 +202,20 @@ class MT5Connection:
         try:
             print("\n🧪 Testing basic functionality...")
             
-            # Test symbol info
-            test_symbols = ["EURUSD", "GBPUSD", "EURGBP"]
-            working_symbols = []
-            
-            for symbol in test_symbols:
-                symbol_info = mt5.symbol_info(symbol)
-                if symbol_info:
-                    working_symbols.append(symbol)
-                    print(f"✅ {symbol}: Available (Spread: {symbol_info.spread} points)")
-                else:
-                    print(f"⚠️ {symbol}: Not available")
+            # Auto-detect available symbols
+            working_symbols = self.detect_available_symbols()
             
             if not working_symbols:
                 print("❌ No symbols available for trading")
+                print("\n🔍 Let's try to debug this...")
+                self.debug_symbols()
                 return False
+            
+            print(f"✅ Found {len(working_symbols)} available symbols:")
+            for symbol in working_symbols[:10]:  # Show first 10
+                symbol_info = mt5.symbol_info(symbol)
+                if symbol_info:
+                    print(f"   📊 {symbol}: Spread={symbol_info.spread} points, Digits={symbol_info.digits}")
             
             # Test tick data
             test_symbol = working_symbols[0]
@@ -231,14 +236,8 @@ class MT5Connection:
             else:
                 print("⚠️ Could not retrieve positions")
             
-            # Test orders history (recent)
-            from datetime import datetime, timedelta
-            today = datetime.now()
-            yesterday = today - timedelta(days=1)
-            
-            deals = mt5.history_deals_get(yesterday, today)
-            if deals is not None:
-                print(f"✅ Recent deals: {len(deals)} deals in last 24h")
+            # Test order capabilities
+            self.test_order_filling_modes(test_symbol)
             
             print("✅ All basic functions working!")
             return True
@@ -246,6 +245,264 @@ class MT5Connection:
         except Exception as e:
             print(f"❌ Error testing functionality: {e}")
             return False
+    
+    def detect_available_symbols(self) -> List[str]:
+        """Auto-detect available currency symbols"""
+        try:
+            print("🔍 Auto-detecting available currency symbols...")
+            
+            # Get all symbols
+            all_symbols = mt5.symbols_get()
+            if not all_symbols:
+                print("❌ Could not retrieve symbols list")
+                return []
+            
+            print(f"📊 Total symbols found: {len(all_symbols)}")
+            
+            # Show first 20 symbols for debugging
+            print("🔍 First 20 symbols from broker:")
+            for i, symbol in enumerate(all_symbols[:20]):
+                print(f"   {i+1:2d}. {symbol.name} (Path: {getattr(symbol, 'path', 'N/A')})")
+            
+            # Step 1: Find any tradeable symbols first
+            working_symbols = []
+            forex_symbols = []
+            all_tradeable = []
+            
+            for symbol in all_symbols:
+                symbol_name = symbol.name
+                
+                # Test if tradeable first
+                if self.test_symbol_tradeable(symbol_name):
+                    all_tradeable.append(symbol_name)
+                    
+                    # Check if it's forex-like
+                    if self.is_forex_symbol(symbol_name):
+                        forex_symbols.append(symbol_name)
+                        working_symbols.append(symbol_name)
+            
+            print(f"✅ Found {len(all_tradeable)} tradeable symbols")
+            print(f"✅ Found {len(forex_symbols)} forex-like symbols")
+            
+            # If we found forex symbols, great!
+            if forex_symbols:
+                print("🎯 Using detected forex symbols:")
+                for symbol in forex_symbols[:15]:  # Show up to 15
+                    symbol_info = mt5.symbol_info(symbol)
+                    if symbol_info:
+                        print(f"   📊 {symbol}: Spread={symbol_info.spread}, Digits={symbol_info.digits}")
+                
+                self.available_symbols = forex_symbols
+                return forex_symbols
+            
+            # If no forex symbols, try any tradeable symbols that look like currency pairs
+            print("🔍 No standard forex symbols found, checking all tradeable symbols...")
+            potential_forex = []
+            
+            for symbol_name in all_tradeable:
+                if self.could_be_forex(symbol_name):
+                    potential_forex.append(symbol_name)
+            
+            if potential_forex:
+                print(f"✅ Found {len(potential_forex)} potential forex symbols:")
+                for symbol in potential_forex[:15]:
+                    symbol_info = mt5.symbol_info(symbol)
+                    if symbol_info:
+                        print(f"   📊 {symbol}: Spread={symbol_info.spread}, Digits={symbol_info.digits}")
+                
+                self.available_symbols = potential_forex
+                return potential_forex
+            
+            # Last resort: use any tradeable symbols
+            if all_tradeable:
+                print(f"⚠️ Using any tradeable symbols ({len(all_tradeable)} found):")
+                symbols_to_use = all_tradeable[:10]  # Limit to 10
+                for symbol in symbols_to_use:
+                    symbol_info = mt5.symbol_info(symbol)
+                    if symbol_info:
+                        print(f"   📊 {symbol}: Spread={symbol_info.spread}, Digits={symbol_info.digits}")
+                
+                self.available_symbols = symbols_to_use
+                return symbols_to_use
+            
+            print("❌ No tradeable symbols found at all")
+            return []
+            
+        except Exception as e:
+            print(f"❌ Error detecting symbols: {e}")
+            import traceback
+            traceback.print_exc()
+            return []
+    
+    def is_forex_symbol(self, symbol_name: str) -> bool:
+        """Check if symbol is a forex pair"""
+        symbol_upper = symbol_name.upper()
+        
+        # Common currency codes (expanded list)
+        currencies = [
+            'USD', 'EUR', 'GBP', 'JPY', 'CHF', 'AUD', 'CAD', 'NZD',
+            'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'HUF', 'ZAR', 'SGD',
+            'HKD', 'MXN', 'CNH', 'TRY', 'RUB', 'BRL', 'INR', 'KRW'
+        ]
+        
+        # Remove common suffixes/prefixes and special characters
+        clean_symbol = symbol_upper
+        suffixes_to_remove = ['.M', 'M', '.', '_', '-', '#', '!', 'C', '.C', '.FX']
+        for suffix in suffixes_to_remove:
+            clean_symbol = clean_symbol.replace(suffix, '')
+        
+        # Remove forex category prefixes
+        prefixes_to_remove = ['FX', 'FOREX', 'FX_', 'C_']
+        for prefix in prefixes_to_remove:
+            if clean_symbol.startswith(prefix):
+                clean_symbol = clean_symbol[len(prefix):]
+        
+        # Check if it's 6 characters and contains currencies
+        if len(clean_symbol) == 6:
+            base_currency = clean_symbol[:3]
+            quote_currency = clean_symbol[3:]
+            if base_currency in currencies and quote_currency in currencies:
+                return True
+        
+        # Check for slash notation (EUR/USD)
+        if '/' in symbol_name:
+            parts = symbol_name.split('/')
+            if len(parts) == 2:
+                base = parts[0].strip().upper()
+                quote = parts[1].strip().upper()
+                for suffix in suffixes_to_remove:
+                    base = base.replace(suffix, '')
+                    quote = quote.replace(suffix, '')
+                if base in currencies and quote in currencies:
+                    return True
+        
+        # Check for underscore notation (EUR_USD)
+        if '_' in symbol_name:
+            parts = symbol_name.split('_')
+            if len(parts) == 2:
+                base = parts[0].strip().upper()
+                quote = parts[1].strip().upper()
+                for suffix in suffixes_to_remove:
+                    base = base.replace(suffix, '')
+                    quote = quote.replace(suffix, '')
+                if base in currencies and quote in currencies:
+                    return True
+        
+        return False
+    
+    def could_be_forex(self, symbol_name: str) -> bool:
+        """Check if symbol could potentially be forex (more lenient)"""
+        symbol_upper = symbol_name.upper()
+        
+        # Expanded currency list
+        currencies = [
+            'USD', 'EUR', 'GBP', 'JPY', 'CHF', 'AUD', 'CAD', 'NZD',
+            'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'HUF', 'ZAR', 'SGD',
+            'HKD', 'MXN', 'CNH', 'TRY', 'RUB', 'BRL', 'INR', 'KRW',
+            'THB', 'MYR', 'PHP', 'ILS', 'CLP', 'COP', 'PEN', 'ARS'
+        ]
+        
+        # Check if symbol contains at least 2 currency codes
+        currency_count = 0
+        for currency in currencies:
+            if currency in symbol_upper:
+                currency_count += 1
+        
+        if currency_count >= 2:
+            return True
+        
+        # Check symbol length (typical forex symbols are 6-8 characters)
+        clean_symbol = symbol_upper.replace('.', '').replace('_', '').replace('/', '').replace('-', '').replace('#', '').replace('!', '').replace('M', '').replace('C', '')
+        if 6 <= len(clean_symbol) <= 8:
+            # Check if first 3 and last 3 characters could be currencies
+            if len(clean_symbol) >= 6:
+                first_part = clean_symbol[:3]
+                last_part = clean_symbol[-3:]
+                if first_part in currencies or last_part in currencies:
+                    return True
+        
+        # Check for forex-like patterns
+        forex_patterns = ['FX', 'FOREX', 'CCY', 'CURR']
+        for pattern in forex_patterns:
+            if pattern in symbol_upper:
+                return True
+        
+        return False
+    
+    def test_symbol_tradeable(self, symbol: str) -> bool:
+        """Test if symbol is tradeable (more lenient)"""
+        try:
+            # First check if symbol exists
+            symbol_info = mt5.symbol_info(symbol)
+            if not symbol_info:
+                return False
+            
+            # Check basic trading permissions
+            trade_mode = getattr(symbol_info, 'trade_mode', None)
+            if trade_mode is not None and trade_mode == mt5.SYMBOL_TRADE_MODE_DISABLED:
+                return False
+            
+            # Try to get tick data
+            tick = mt5.symbol_info_tick(symbol)
+            if not tick:
+                # If can't get tick, try to select symbol first
+                if not mt5.symbol_select(symbol, True):
+                    return False
+                
+                # Try tick again
+                tick = mt5.symbol_info_tick(symbol)
+                if not tick:
+                    return False
+            
+            # Check if prices are reasonable
+            if tick.bid <= 0 or tick.ask <= 0:
+                return False
+            
+            # Allow equal bid/ask for some symbols (crypto, indices)
+            if tick.ask < tick.bid:
+                return False
+            
+            # Check if symbol has reasonable spread (not too wide)
+            spread = tick.ask - tick.bid
+            if spread > tick.ask * 0.1:  # Spread more than 10% of price is suspicious
+                return False
+            
+            return True
+            
+        except Exception as e:
+            # Debug print for troubleshooting
+            print(f"   ⚠️ Error testing {symbol}: {e}")
+            return False
+    
+    def test_order_filling_modes(self, symbol: str):
+        """Test available order filling modes for symbol"""
+        try:
+            print(f"🧪 Testing order filling modes for {symbol}...")
+            
+            symbol_info = mt5.symbol_info(symbol)
+            if not symbol_info:
+                return
+            
+            # Get filling mode from symbol info
+            filling_mode = symbol_info.filling_mode
+            
+            # Determine best filling mode
+            if filling_mode & mt5.ORDER_FILLING_FOK:
+                self.preferred_filling = mt5.ORDER_FILLING_FOK
+                print(f"✅ Using ORDER_FILLING_FOK for {symbol}")
+            elif filling_mode & mt5.ORDER_FILLING_IOC:
+                self.preferred_filling = mt5.ORDER_FILLING_IOC
+                print(f"✅ Using ORDER_FILLING_IOC for {symbol}")
+            elif filling_mode & mt5.ORDER_FILLING_RETURN:
+                self.preferred_filling = mt5.ORDER_FILLING_RETURN
+                print(f"✅ Using ORDER_FILLING_RETURN for {symbol}")
+            else:
+                self.preferred_filling = mt5.ORDER_FILLING_IOC  # Default fallback
+                print(f"⚠️ Using default ORDER_FILLING_IOC for {symbol}")
+                
+        except Exception as e:
+            print(f"⚠️ Could not determine filling mode: {e}")
+            self.preferred_filling = mt5.ORDER_FILLING_IOC
     
     def calculate_pips(self, position) -> float:
         """Calculate pips for a position"""
@@ -404,7 +661,7 @@ class MT5Connection:
     def place_order(self, symbol: str, order_type: int, lots: float, 
                    price: float = 0.0, sl: float = 0.0, tp: float = 0.0,
                    deviation: int = 20, comment: str = "Arbitrage") -> Optional[Dict]:
-        """Place trading order"""
+        """Place trading order with auto-detected filling mode"""
         try:
             if not self.connected:
                 print("❌ Not connected to MT5")
@@ -427,6 +684,9 @@ class MT5Connection:
                 else:
                     price = tick['bid']
             
+            # Determine best filling mode for this symbol
+            filling_mode = self.get_filling_mode(symbol)
+            
             # Prepare request
             request = {
                 "action": mt5.TRADE_ACTION_DEAL,
@@ -440,7 +700,7 @@ class MT5Connection:
                 "magic": 234000,
                 "comment": comment,
                 "type_time": mt5.ORDER_TIME_GTC,
-                "type_filling": mt5.ORDER_FILLING_IOC,
+                "type_filling": filling_mode,
             }
             
             # Send order
@@ -453,8 +713,28 @@ class MT5Connection:
             result_dict = result._asdict()
             
             if result_dict.get('retcode') != mt5.TRADE_RETCODE_DONE:
-                print(f"❌ Order failed: {result_dict.get('comment', 'Unknown error')}")
-                return None
+                # Try alternative filling modes if first attempt fails
+                if result_dict.get('retcode') == mt5.TRADE_RETCODE_INVALID_FILL:
+                    print(f"⚠️ Trying alternative filling mode...")
+                    alternative_modes = [
+                        mt5.ORDER_FILLING_IOC,
+                        mt5.ORDER_FILLING_FOK,
+                        mt5.ORDER_FILLING_RETURN
+                    ]
+                    
+                    for alt_mode in alternative_modes:
+                        if alt_mode != filling_mode:
+                            request["type_filling"] = alt_mode
+                            result = mt5.order_send(request)
+                            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                                result_dict = result._asdict()
+                                break
+                    else:
+                        print(f"❌ Order failed with all filling modes: {result_dict.get('comment', 'Unknown error')}")
+                        return None
+                else:
+                    print(f"❌ Order failed: {result_dict.get('comment', 'Unknown error')}")
+                    return None
             
             print(f"✅ Order successful: {symbol} {lots} lots, Ticket: {result_dict.get('order')}")
             return result_dict
@@ -462,6 +742,28 @@ class MT5Connection:
         except Exception as e:
             print(f"❌ Error placing order: {e}")
             return None
+    
+    def get_filling_mode(self, symbol: str) -> int:
+        """Get best filling mode for symbol"""
+        try:
+            symbol_info = mt5.symbol_info(symbol)
+            if not symbol_info:
+                return mt5.ORDER_FILLING_IOC
+            
+            filling_mode = symbol_info.filling_mode
+            
+            # Prefer FOK, then IOC, then RETURN
+            if filling_mode & mt5.ORDER_FILLING_FOK:
+                return mt5.ORDER_FILLING_FOK
+            elif filling_mode & mt5.ORDER_FILLING_IOC:
+                return mt5.ORDER_FILLING_IOC
+            elif filling_mode & mt5.ORDER_FILLING_RETURN:
+                return mt5.ORDER_FILLING_RETURN
+            else:
+                return mt5.ORDER_FILLING_IOC  # Default fallback
+                
+        except Exception:
+            return mt5.ORDER_FILLING_IOC
     
     def close_position(self, ticket: int) -> bool:
         """Close position by ticket"""
@@ -574,6 +876,72 @@ class MT5Connection:
         if now.weekday() >= 5:  # Saturday = 5, Sunday = 6
             return False
         return True
+    
+    def get_available_symbols(self) -> List[str]:
+        """Get cached available symbols"""
+        return self.available_symbols.copy()
+    
+    def debug_symbols(self):
+        """Debug symbol detection issues"""
+        try:
+            print("\n🐛 SYMBOL DEBUG MODE")
+            print("="*50)
+            
+            # Get all symbols
+            all_symbols = mt5.symbols_get()
+            if not all_symbols:
+                print("❌ mt5.symbols_get() returned None")
+                return
+            
+            print(f"📊 Total symbols from broker: {len(all_symbols)}")
+            
+            # Show more symbols for debugging
+            print("\n📋 All available symbols (first 50):")
+            for i, symbol in enumerate(all_symbols[:50]):
+                symbol_name = symbol.name
+                
+                # Try to get basic info
+                try:
+                    symbol_info = mt5.symbol_info(symbol_name)
+                    tick = mt5.symbol_info_tick(symbol_name)
+                    
+                    status = "✅" if (symbol_info and tick) else "❌"
+                    trade_mode = getattr(symbol_info, 'trade_mode', 'Unknown') if symbol_info else 'No Info'
+                    
+                    print(f"   {i+1:2d}. {status} {symbol_name:15s} (Trade Mode: {trade_mode})")
+                    
+                    # If it's working, show more details
+                    if symbol_info and tick and i < 5:
+                        print(f"       Bid: {tick.bid:.5f}, Ask: {tick.ask:.5f}, Spread: {symbol_info.spread}")
+                
+                except Exception as e:
+                    print(f"   {i+1:2d}. ❌ {symbol_name:15s} (Error: {str(e)[:30]})")
+            
+            # Try to manually test some common symbols
+            print(f"\n🧪 Manual testing of common symbols:")
+            test_symbols = ['EURUSD', 'GBPUSD', 'USDJPY', 'GOLD', 'XAUUSD', 'BTCUSD', 'US30', 'SPX500']
+            
+            for symbol in test_symbols:
+                try:
+                    # Try to select symbol
+                    selected = mt5.symbol_select(symbol, True)
+                    symbol_info = mt5.symbol_info(symbol)
+                    tick = mt5.symbol_info_tick(symbol)
+                    
+                    if symbol_info and tick:
+                        print(f"   ✅ {symbol}: Bid={tick.bid:.5f}, Ask={tick.ask:.5f}")
+                    else:
+                        print(f"   ❌ {symbol}: Not available")
+                
+                except Exception as e:
+                    print(f"   ❌ {symbol}: Error - {e}")
+            
+            print("="*50)
+            
+        except Exception as e:
+            print(f"❌ Debug error: {e}")
+            import traceback
+            traceback.print_exc()
 
 # Simple testing function
 def test_mt5_auto_connection():
@@ -604,12 +972,16 @@ def test_mt5_auto_connection():
         
         # Show some market data
         print("\n📈 Market Data:")
-        symbols = ["EURUSD", "GBPUSD", "EURGBP"]
-        ticks = mt5_conn.get_multiple_ticks(symbols)
-        for symbol, tick in ticks.items():
-            if tick:
-                spread = (tick['ask'] - tick['bid']) * 10000
-                print(f"   {symbol}: {tick['bid']:.5f}/{tick['ask']:.5f} (Spread: {spread:.1f})")
+        available_symbols = mt5_conn.get_available_symbols()
+        if available_symbols:
+            symbols_to_show = available_symbols[:5]  # Show first 5 available symbols
+            ticks = mt5_conn.get_multiple_ticks(symbols_to_show)
+            for symbol, tick in ticks.items():
+                if tick:
+                    spread = (tick['ask'] - tick['bid']) * (10000 if 'JPY' not in symbol else 100)
+                    print(f"   {symbol}: {tick['bid']:.5f}/{tick['ask']:.5f} (Spread: {spread:.1f})")
+        else:
+            print("   No symbols available")
         
         print("\n✅ All tests passed! Ready to use.")
         

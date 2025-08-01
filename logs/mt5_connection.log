@@ -464,3 +464,22 @@
 2025-07-31 22:11:04,248 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
 2025-07-31 22:11:06,275 - arbitrage_engine - INFO - SMART REVERSE: CADCHF.v | -0.63p | 56% conf
 2025-07-31 22:11:07,280 - arbitrage_engine - INFO - Smart Arbitrage Engine stopped
+2025-07-31 23:41:52,389 - recovery_system - INFO -  Recovery system started
+2025-07-31 23:42:48,714 - recovery_system - INFO -  Recovery system started
+2025-07-31 23:44:27,584 - arbitrage_engine - INFO - Found 0 major forex pairs
+2025-07-31 23:44:27,584 - arbitrage_engine - INFO - Creating triangular pairs from 0 available pairs
+2025-07-31 23:44:27,584 - arbitrage_engine - INFO - Created 0 real triangular arbitrage opportunities
+2025-07-31 23:45:09,667 - arbitrage_engine - INFO - Found 0 major forex pairs
+2025-07-31 23:45:09,667 - arbitrage_engine - INFO - Creating triangular pairs from 0 available pairs
+2025-07-31 23:45:09,667 - arbitrage_engine - INFO - Created 0 real triangular arbitrage opportunities
+2025-07-31 23:45:09,682 - arbitrage_engine - INFO -  Smart Arbitrage Engine V2.0 Initialized
+2025-07-31 23:45:12,624 - arbitrage_engine - INFO - Smart Arbitrage Engine V2.0 started
+2025-07-31 23:45:13,048 - recovery_system - INFO -  Recovery system started
+2025-07-31 23:47:58,879 - arbitrage_engine - INFO - Found 0 major forex pairs
+2025-07-31 23:47:58,879 - arbitrage_engine - INFO - Creating triangular pairs from 0 available pairs
+2025-07-31 23:47:58,879 - arbitrage_engine - INFO - Created 0 real triangular arbitrage opportunities
+2025-07-31 23:47:58,879 - arbitrage_engine - INFO - Enhanced market analysis initialized
+2025-07-31 23:47:58,879 - arbitrage_engine - INFO - Smart Arbitrage Engine V2.0 Initialized
+2025-07-31 23:48:06,656 - arbitrage_engine - INFO - Smart scanning started: 0 triangles, 0 pairs
+2025-07-31 23:48:06,656 - arbitrage_engine - INFO - Smart Arbitrage Engine V2.0 started
+2025-07-31 23:48:07,053 - recovery_system - INFO -  Recovery system started

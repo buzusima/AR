@@ -659,12 +659,17 @@ class MT5Connection:
         return ticks
     
     def place_order(self, symbol: str, order_type: int, lots: float, 
-                   price: float = 0.0, sl: float = 0.0, tp: float = 0.0,
-                   deviation: int = 20, comment: str = "Arbitrage") -> Optional[Dict]:
-        """Place trading order with auto-detected filling mode"""
+                price: float = 0.0, sl: float = 0.0, tp: float = 0.0,
+                deviation: int = 20, comment: str = "Arbitrage") -> Optional[Dict]:
+        """Place trading order with COMPLETE structure"""
         try:
             if not self.connected:
                 print("❌ Not connected to MT5")
+                return None
+                
+            # ✅ เช็ค MT5 connection อีกครั้ง
+            if not mt5.initialize():
+                print("❌ MT5 not initialized")
                 return None
                 
             symbol_info = self.get_symbol_info(symbol)
@@ -684,18 +689,35 @@ class MT5Connection:
                 else:
                     price = tick['bid']
             
-            # Determine best filling mode for this symbol
-            filling_mode = self.get_filling_mode(symbol)
+            # ✅ ตรวจสอบพารามิเตอร์ทั้งหมดก่อนส่ง
+            print(f"🔍 ORDER VALIDATION:")
+            print(f"   Symbol: {symbol}")
+            print(f"   Order Type: {order_type}")
+            print(f"   Volume: {lots}")
+            print(f"   Price: {price}")
+            print(f"   Deviation: {deviation}")
+            print(f"   Comment: {comment}")
             
-            # Prepare request
+            # ✅ Validate parameters
+            if lots <= 0 or lots > 100:
+                print(f"❌ Invalid lot size: {lots}")
+                return None
+                
+            if price <= 0:
+                print(f"❌ Invalid price: {price}")
+                return None
+            
+            # ✅ Get symbol-specific settings
+            filling_mode = self.get_filling_mode(symbol)
+            print(f"   Filling Mode: {filling_mode}")
+            
+            # ✅ สร้าง request structure ที่สมบูรณ์
             request = {
                 "action": mt5.TRADE_ACTION_DEAL,
                 "symbol": symbol,
                 "volume": lots,
                 "type": order_type,
                 "price": price,
-                "sl": sl,
-                "tp": tp,
                 "deviation": deviation,
                 "magic": 234000,
                 "comment": comment,
@@ -703,46 +725,111 @@ class MT5Connection:
                 "type_filling": filling_mode,
             }
             
-            # Send order
-            result = mt5.order_send(request)
-            if result is None:
-                error = mt5.last_error()
-                print(f"❌ Order send failed: {error}")
+            # ✅ เพิ่ม SL/TP ถ้าจำเป็น (บาง broker ต้องการ)
+            if sl > 0:
+                request["sl"] = sl
+            if tp > 0:
+                request["tp"] = tp
+            
+            print(f"📤 REQUEST STRUCTURE:")
+            for key, value in request.items():
+                print(f"   {key}: {value}")
+            
+            # ✅ ทดสอบ connection ก่อนส่ง
+            terminal_info = mt5.terminal_info()
+            if not terminal_info or not terminal_info.connected:
+                print("❌ MT5 terminal not connected to broker")
                 return None
             
-            result_dict = result._asdict()
+            account_info = mt5.account_info()
+            if not account_info:
+                print("❌ No account logged in")
+                return None
+                
+            print(f"✅ Terminal connected: {terminal_info.connected}")
+            print(f"✅ Account: {account_info.login}")
             
-            if result_dict.get('retcode') != mt5.TRADE_RETCODE_DONE:
-                # Try alternative filling modes if first attempt fails
-                if result_dict.get('retcode') == mt5.TRADE_RETCODE_INVALID_FILL:
-                    print(f"⚠️ Trying alternative filling mode...")
-                    alternative_modes = [
-                        mt5.ORDER_FILLING_IOC,
-                        mt5.ORDER_FILLING_FOK,
-                        mt5.ORDER_FILLING_RETURN
-                    ]
-                    
-                    for alt_mode in alternative_modes:
-                        if alt_mode != filling_mode:
-                            request["type_filling"] = alt_mode
-                            result = mt5.order_send(request)
-                            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-                                result_dict = result._asdict()
-                                break
-                    else:
-                        print(f"❌ Order failed with all filling modes: {result_dict.get('comment', 'Unknown error')}")
-                        return None
-                else:
-                    print(f"❌ Order failed: {result_dict.get('comment', 'Unknown error')}")
-                    return None
+            # ✅ ส่ง order พร้อม error handling
+            print(f"🚀 SENDING ORDER...")
+            result = mt5.order_send(request)
             
-            print(f"✅ Order successful: {symbol} {lots} lots, Ticket: {result_dict.get('order')}")
-            return result_dict
+            # ✅ ตรวจสอบผลลัพธ์อย่างละเอียด
+            if result is None:
+                error = mt5.last_error()
+                print(f"❌ Order send returned None")
+                print(f"   MT5 Last Error: {error}")
+                return None
             
+            # ✅ แสดงผลลัพธ์ทั้งหมด
+            result_dict = result._asdict() if hasattr(result, '_asdict') else dict(result)
+            print(f"📋 ORDER RESULT:")
+            for key, value in result_dict.items():
+                print(f"   {key}: {value}")
+            
+            retcode = result_dict.get('retcode', -1)
+            
+            # ✅ เช็ค return codes ต่างๆ
+            if retcode == mt5.TRADE_RETCODE_DONE:
+                print(f"✅ Order successful: Ticket {result_dict.get('order', 'Unknown')}")
+                return result_dict
+            elif retcode == mt5.TRADE_RETCODE_INVALID_FILL:
+                print(f"❌ Invalid filling mode, trying alternatives...")
+                # ลอง filling modes อื่น
+                for alt_fill in [mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_FOK, mt5.ORDER_FILLING_RETURN]:
+                    if alt_fill != filling_mode:
+                        request["type_filling"] = alt_fill
+                        print(f"   Trying filling mode: {alt_fill}")
+                        result = mt5.order_send(request)
+                        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                            result_dict = result._asdict()
+                            print(f"✅ Success with alternative filling mode!")
+                            return result_dict
+                print(f"❌ All filling modes failed")
+                return None
+            else:
+                print(f"❌ Order failed: Code={retcode}, Comment='{result_dict.get('comment', 'No comment')}'")
+                
+                # ✅ แสดง error codes ที่เป็นไปได้
+                error_codes = {
+                    10004: "TRADE_RETCODE_REQUOTE - Requote",
+                    10006: "TRADE_RETCODE_REJECT - Request rejected", 
+                    10007: "TRADE_RETCODE_CANCEL - Request canceled",
+                    10008: "TRADE_RETCODE_PLACED - Order placed",
+                    10009: "TRADE_RETCODE_DONE - Request completed",
+                    10010: "TRADE_RETCODE_DONE_PARTIAL - Request completed partially",
+                    10011: "TRADE_RETCODE_ERROR - Request processing error",
+                    10012: "TRADE_RETCODE_TIMEOUT - Request timeout",
+                    10013: "TRADE_RETCODE_INVALID - Invalid request",
+                    10014: "TRADE_RETCODE_INVALID_VOLUME - Invalid volume",
+                    10015: "TRADE_RETCODE_INVALID_PRICE - Invalid price",
+                    10016: "TRADE_RETCODE_INVALID_STOPS - Invalid stops",
+                    10017: "TRADE_RETCODE_TRADE_DISABLED - Trade disabled",
+                    10018: "TRADE_RETCODE_MARKET_CLOSED - Market closed",
+                    10019: "TRADE_RETCODE_NO_MONEY - No money",
+                    10020: "TRADE_RETCODE_PRICE_CHANGED - Prices changed",
+                    10021: "TRADE_RETCODE_PRICE_OFF - Off quotes",
+                    10022: "TRADE_RETCODE_INVALID_EXPIRATION - Invalid expiration",
+                    10023: "TRADE_RETCODE_ORDER_CHANGED - Order state changed",
+                    10024: "TRADE_RETCODE_TOO_MANY_REQUESTS - Too many requests",
+                    10025: "TRADE_RETCODE_NO_CHANGES - No changes",
+                    10026: "TRADE_RETCODE_SERVER_DISABLES_AT - Server disables AutoTrading",
+                    10027: "TRADE_RETCODE_CLIENT_DISABLES_AT - Client disables AutoTrading",
+                    10028: "TRADE_RETCODE_LOCKED - Request locked",
+                    10029: "TRADE_RETCODE_FROZEN - Order or position frozen",
+                    10030: "TRADE_RETCODE_INVALID_FILL - Invalid fill"
+                }
+                
+                error_msg = error_codes.get(retcode, f"Unknown error code: {retcode}")
+                print(f"   Error Details: {error_msg}")
+                
+                return None
+                
         except Exception as e:
-            print(f"❌ Error placing order: {e}")
+            print(f"❌ Exception in place_order: {e}")
+            import traceback
+            traceback.print_exc()
             return None
-    
+        
     def get_filling_mode(self, symbol: str) -> int:
         """Get best filling mode for symbol"""
         try:
@@ -766,74 +853,207 @@ class MT5Connection:
             return mt5.ORDER_FILLING_IOC
     
     def close_position(self, ticket: int) -> bool:
-        """Close position by ticket"""
+        """Close position by ticket with PROPER filling mode"""
         try:
             if not self.connected:
+                print(f"❌ MT5 not connected")
                 return False
                 
+            # Get position details
             positions = mt5.positions_get(ticket=ticket)
             if not positions:
                 print(f"❌ Position {ticket} not found")
                 return False
             
             position = positions[0]
+            symbol = position.symbol
+            volume = position.volume
+            pos_type = position.type
             
-            # Determine opposite order type and price
-            if position.type == mt5.ORDER_TYPE_BUY:
-                order_type = mt5.ORDER_TYPE_SELL
-                tick = mt5.symbol_info_tick(position.symbol)
-                price = tick.bid if tick else 0
-            else:
-                order_type = mt5.ORDER_TYPE_BUY
-                tick = mt5.symbol_info_tick(position.symbol)
-                price = tick.ask if tick else 0
+            print(f"🔄 Closing position {ticket}: {symbol} {volume} lots")
             
-            if price == 0:
-                print(f"❌ Could not get closing price for {position.symbol}")
+            # Get current market price
+            tick = mt5.symbol_info_tick(symbol)
+            if not tick:
+                print(f"❌ Could not get current price for {symbol}")
                 return False
             
-            # Close request
+            # Determine close order type and price
+            if pos_type == mt5.POSITION_TYPE_BUY:
+                # Close BUY position with SELL order
+                order_type = mt5.ORDER_TYPE_SELL
+                price = tick.bid
+            else:
+                # Close SELL position with BUY order  
+                order_type = mt5.ORDER_TYPE_BUY
+                price = tick.ask
+            
+            # Get symbol info for filling mode
+            symbol_info = mt5.symbol_info(symbol)
+            if not symbol_info:
+                print(f"❌ Could not get symbol info for {symbol}")
+                return False
+            
+            # ✅ FIXED: Determine proper filling mode for closing
+            filling_mode = symbol_info.filling_mode
+            
+            # Try different filling modes in order of preference
+            filling_modes_to_try = []
+            
+            if filling_mode & mt5.ORDER_FILLING_FOK:
+                filling_modes_to_try.append(mt5.ORDER_FILLING_FOK)
+            if filling_mode & mt5.ORDER_FILLING_IOC:
+                filling_modes_to_try.append(mt5.ORDER_FILLING_IOC)
+            if filling_mode & mt5.ORDER_FILLING_RETURN:
+                filling_modes_to_try.append(mt5.ORDER_FILLING_RETURN)
+            
+            # Fallback to IOC if none specified
+            if not filling_modes_to_try:
+                filling_modes_to_try = [mt5.ORDER_FILLING_IOC]
+            
+            print(f"   📤 Trying filling modes: {filling_modes_to_try}")
+            
+            # Try each filling mode
+            for fill_mode in filling_modes_to_try:
+                print(f"   🔄 Attempting close with filling mode: {fill_mode}")
+                
+                # Create close request
+                request = {
+                    "action": mt5.TRADE_ACTION_DEAL,
+                    "symbol": symbol,
+                    "volume": volume,
+                    "type": order_type,
+                    "position": ticket,  # ✅ IMPORTANT: Specify position to close
+                    "price": price,
+                    "deviation": 20,
+                    "magic": 234000,
+                    "comment": "Close position",
+                    "type_time": mt5.ORDER_TIME_GTC,
+                    "type_filling": fill_mode,  # ✅ Use proper filling mode
+                }
+                
+                print(f"   📋 Close request: {request}")
+                
+                # Send close order
+                result = mt5.order_send(request)
+                
+                if result is None:
+                    error = mt5.last_error()
+                    print(f"   ❌ Close order returned None: {error}")
+                    continue  # Try next filling mode
+                
+                print(f"   📋 Close result: retcode={result.retcode}, comment='{result.comment}'")
+                
+                if result.retcode == mt5.TRADE_RETCODE_DONE:
+                    print(f"   ✅ Position {ticket} closed successfully with filling mode {fill_mode}")
+                    return True
+                elif result.retcode == mt5.TRADE_RETCODE_INVALID_FILL:
+                    print(f"   ⚠️ Invalid filling mode {fill_mode}, trying next...")
+                    continue  # Try next filling mode
+                else:
+                    print(f"   ❌ Close failed: {result.retcode} - {result.comment}")
+                    continue  # Try next filling mode
+            
+            # If all filling modes failed
+            print(f"❌ All filling modes failed for position {ticket}")
+            return False
+            
+        except Exception as e:
+            print(f"❌ Exception closing position {ticket}: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+
+    def close_all_positions(self) -> int:
+        """Close all open positions with IMPROVED error handling"""
+        closed_count = 0
+        
+        try:
+            positions = mt5.positions_get()
+            if not positions:
+                print("📋 No positions to close")
+                return 0
+            
+            print(f"🔄 Attempting to close {len(positions)} positions...")
+            
+            for position in positions:
+                ticket = position.ticket
+                symbol = position.symbol
+                
+                print(f"🔄 Closing {symbol} (Ticket: {ticket})")
+                
+                success = self.close_position(ticket)
+                if success:
+                    closed_count += 1
+                    print(f"   ✅ Closed {symbol}")
+                else:
+                    print(f"   ❌ Failed to close {symbol}")
+                
+                # Small delay between closes
+                time.sleep(0.2)
+            
+            print(f"✅ Successfully closed {closed_count} out of {len(positions)} positions")
+            return closed_count
+            
+        except Exception as e:
+            print(f"❌ Error in close_all_positions: {e}")
+            return closed_count
+
+    # ✅ ALTERNATIVE METHOD: Force close using order_send directly
+    def force_close_position(self, ticket: int) -> bool:
+        """Force close position using direct order_send (backup method)"""
+        try:
+            print(f"🚨 FORCE CLOSING position {ticket}")
+            
+            # Get position
+            positions = mt5.positions_get(ticket=ticket)
+            if not positions:
+                return False
+            
+            position = positions[0]
+            symbol = position.symbol
+            volume = position.volume
+            pos_type = position.type
+            
+            # Get current price
+            tick = mt5.symbol_info_tick(symbol)
+            if not tick:
+                return False
+            
+            # Create opposite order to close
+            if pos_type == 0:  # Close BUY with SELL
+                order_type = mt5.ORDER_TYPE_SELL
+                price = tick.bid
+            else:  # Close SELL with BUY
+                order_type = mt5.ORDER_TYPE_BUY
+                price = tick.ask
+            
+            # Simple request without complex filling mode logic
             request = {
                 "action": mt5.TRADE_ACTION_DEAL,
-                "symbol": position.symbol,
-                "volume": position.volume,
+                "symbol": symbol,
+                "volume": volume,
                 "type": order_type,
                 "position": ticket,
                 "price": price,
-                "deviation": 20,
-                "magic": 234000,
-                "comment": "Close position",
+                "comment": "Force close",
                 "type_time": mt5.ORDER_TIME_GTC,
-                "type_filling": mt5.ORDER_FILLING_IOC,
+                "type_filling": mt5.ORDER_FILLING_IOC,  # Simple IOC
             }
             
             result = mt5.order_send(request)
+            
             if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-                print(f"✅ Position {ticket} closed successfully")
+                print(f"✅ FORCE CLOSE successful: {ticket}")
                 return True
             else:
-                error_msg = result.comment if result else "Unknown error"
-                print(f"❌ Failed to close position {ticket}: {error_msg}")
+                error_msg = result.comment if result else "No result"
+                print(f"❌ FORCE CLOSE failed: {error_msg}")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error closing position {ticket}: {e}")
+            print(f"❌ Force close error: {e}")
             return False
-    
-    def close_all_positions(self) -> int:
-        """Close all open positions"""
-        closed_count = 0
-        positions = self.get_positions()
-        
-        print(f"🔄 Attempting to close {len(positions)} positions...")
-        
-        for position in positions:
-            if self.close_position(position.get('ticket')):
-                closed_count += 1
-                time.sleep(0.1)  # Small delay between closes
-        
-        print(f"✅ Closed {closed_count} out of {len(positions)} positions")
-        return closed_count
     
     def get_account_summary(self) -> Dict:
         """Get account summary for GUI"""
@@ -870,12 +1090,42 @@ class MT5Connection:
         }
     
     def is_market_open(self) -> bool:
-        """Check if market is open (simple check)"""
-        now = datetime.now()
-        # Simple check - avoid weekends
-        if now.weekday() >= 5:  # Saturday = 5, Sunday = 6
+        try:
+            from datetime import datetime
+            import pytz
+            
+            # ✅ ใช้ UTC time
+            utc_now = datetime.now(pytz.UTC)
+            current_hour = utc_now.hour
+            current_weekday = utc_now.weekday()
+            
+            # ✅ เช็ค weekend แบบละเอียด
+            if current_weekday == 5:  # Saturday
+                return False
+            elif current_weekday == 6:  # Sunday
+                if current_hour < 22:  # ก่อน 22:00 UTC
+                    return False
+            elif current_weekday == 4:  # Friday
+                if current_hour >= 22:  # หลัง 22:00 UTC
+                    return False
+            
+            # ✅ เช็ค MT5 connection
+            terminal_info = mt5.terminal_info()
+            if not terminal_info or not terminal_info.connected:
+                return False
+            
+            # ✅ เช็ค tick data จริง
+            for symbol in ['EURUSD.v', 'EURUSD', 'GBPUSD.v']:
+                tick = mt5.symbol_info_tick(symbol)
+                if tick and tick.time > 0:
+                    tick_age = utc_now.timestamp() - tick.time
+                    if tick_age < 300:  # ภายใน 5 นาที
+                        return True
+            
             return False
-        return True
+            
+        except Exception:
+            return False    
     
     def get_available_symbols(self) -> List[str]:
         """Get cached available symbols"""

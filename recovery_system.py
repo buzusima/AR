@@ -191,7 +191,7 @@ class RecoverySystem:
             self.logger.error(f"Error in Martingale recovery: {e}")
     
     def execute_martingale_recovery(self, pos_data: Dict, level: int, multiplier: float) -> bool:
-        """Execute Martingale recovery trade"""
+        """Execute Martingale WITHOUT automatic SL/TP"""
         try:
             symbol = pos_data['symbol']
             original_volume = pos_data['volume']
@@ -199,41 +199,34 @@ class RecoverySystem:
             
             # Calculate new volume
             new_volume = original_volume * (multiplier ** (level + 1))
-            new_volume = min(new_volume, 2.0)  # Cap at 2.0 lots
+            new_volume = min(new_volume, 2.0)
             new_volume = round(new_volume, 2)
             
             # Same direction as losing position
-            if pos_type == 0:  # Original was BUY
-                order_type = mt5.ORDER_TYPE_BUY
+            if pos_type == 0:  # BUY
+                order_type = 0
                 price = self.mt5_conn.get_tick(symbol)['ask']
-            else:  # Original was SELL
-                order_type = mt5.ORDER_TYPE_SELL
+            else:  # SELL
+                order_type = 1
                 price = self.mt5_conn.get_tick(symbol)['bid']
             
-            # Calculate TP and SL
-            tp_pips = 20 + (level * 10)  # Increase TP with levels
-            sl_pips = 30 + (level * 10)  # Increase SL with levels
-            
-            tp_price = self.calculate_tp_price(symbol, price, tp_pips, pos_type)
-            sl_price = self.calculate_sl_price(symbol, price, sl_pips, pos_type)
-            
-            # Place Martingale order
+            # ✅ Place Martingale order WITHOUT SL/TP
             result = self.mt5_conn.place_order(
                 symbol=symbol,
                 order_type=order_type,
                 lots=new_volume,
                 price=price,
-                tp=tp_price,
-                sl=sl_price,
                 comment=f"Martingale-L{level + 1}"
+                # ❌ ไม่ใส่ tp=tp_price, sl=sl_price
             )
             
-            return result is not None and result.get('retcode') == mt5.TRADE_RETCODE_DONE
+            return result is not None and result.get('retcode') == 10009
             
         except Exception as e:
             self.logger.error(f"Error executing Martingale recovery: {e}")
             return False
-    
+
+
     def check_grid_recovery(self):
         """Check and execute Grid recovery"""
         if not self.methods_config.get('grid', {}).get('enable', True):

@@ -663,6 +663,13 @@ class MT5Connection:
                 deviation: int = 20, comment: str = "Arbitrage") -> Optional[Dict]:
         """Place trading order with COMPLETE structure"""
         try:
+            # 🚨 FORCE CHECK MARKET FIRST
+            if not self.is_market_open():
+                print(f"❌ ORDER BLOCKED - Market CLOSED ({symbol} {lots} lots)")
+                return None
+                
+            print(f"✅ Market OPEN - Processing order: {symbol} {lots} lots")
+
             if not self.connected:
                 print("❌ Not connected to MT5")
                 return None
@@ -1090,43 +1097,39 @@ class MT5Connection:
         }
     
     def is_market_open(self) -> bool:
+        """Check if market is open with detailed validation"""
         try:
-            from datetime import datetime
-            import pytz
+            now = datetime.now()
+            weekday = now.weekday()  # 0=Monday, 6=Sunday
+            hour = now.hour
             
-            # ✅ ใช้ UTC time
-            utc_now = datetime.now(pytz.UTC)
-            current_hour = utc_now.hour
-            current_weekday = utc_now.weekday()
+            # Print current time for debugging
+            print(f"🕐 Market Check: {now.strftime('%A %H:%M')} (Weekday: {weekday})")
             
-            # ✅ เช็ค weekend แบบละเอียด
-            if current_weekday == 5:  # Saturday
+            # Check if it's weekend
+            if weekday == 5:  # Saturday
+                print("   🔴 Saturday - Market CLOSED")
                 return False
-            elif current_weekday == 6:  # Sunday
-                if current_hour < 22:  # ก่อน 22:00 UTC
+            elif weekday == 6:  # Sunday
+                if hour >= 22:  # Sunday after 10 PM (market opens)
+                    print("   🟢 Sunday evening - Market OPEN")
+                    return True
+                else:
+                    print(f"   🔴 Sunday {hour:02d}:xx - Market opens at 22:00")
                     return False
-            elif current_weekday == 4:  # Friday
-                if current_hour >= 22:  # หลัง 22:00 UTC
+            else:
+                # Monday to Friday - reasonable trading hours
+                if 1 <= hour <= 23:  # 01:00 - 23:00
+                    print(f"   🟢 Weekday {hour:02d}:xx - Market OPEN")
+                    return True
+                else:
+                    print(f"   🔴 Weekday {hour:02d}:xx - Outside trading hours")
                     return False
+                    
+        except Exception as e:
+            print(f"   ❌ Market check error: {e}")
+            return False  # Safe default
             
-            # ✅ เช็ค MT5 connection
-            terminal_info = mt5.terminal_info()
-            if not terminal_info or not terminal_info.connected:
-                return False
-            
-            # ✅ เช็ค tick data จริง
-            for symbol in ['EURUSD.v', 'EURUSD', 'GBPUSD.v']:
-                tick = mt5.symbol_info_tick(symbol)
-                if tick and tick.time > 0:
-                    tick_age = utc_now.timestamp() - tick.time
-                    if tick_age < 300:  # ภายใน 5 นาที
-                        return True
-            
-            return False
-            
-        except Exception:
-            return False    
-    
     def get_available_symbols(self) -> List[str]:
         """Get cached available symbols"""
         return self.available_symbols.copy()

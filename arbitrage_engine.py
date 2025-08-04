@@ -10,8 +10,10 @@ from typing import Dict, List, Tuple, Optional
 import logging
 import statistics
 import random
+from portfolio_guardian import MasterPortfolioManager
 
 class SmartArbitrageEngine:
+    
     def __init__(self, mt5_connection, config_path: str = "config.json"):
         """Hybrid Multi-Strategy Trading Engine"""
         self.mt5_conn = mt5_connection
@@ -65,7 +67,20 @@ class SmartArbitrageEngine:
         self.on_signal_callback = None
         self.on_trade_callback = None
         self.on_error_callback = None
-    
+        
+        try:
+            self.portfolio_guardian = MasterPortfolioManager(mt5_connection, config_path)
+            self.portfolio_guardian.set_callbacks(
+                profit_callback=self.on_profit_locked,
+                hedge_callback=self.on_hedge_recommendation,
+                error_callback=self.on_portfolio_error
+            )
+            print("✅ Portfolio Guardian initialized")
+        except Exception as e:
+            print(f"⚠️ Portfolio Guardian init error: {e}")
+            self.portfolio_guardian = None
+
+
     def load_config(self, config_path: str) -> dict:
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
@@ -161,6 +176,10 @@ class SmartArbitrageEngine:
         
         while self.running:
             try:
+                if not self.mt5_conn.is_market_open():
+                    print("⏸️ Market CLOSED - Pausing trading")
+                    time.sleep(30)  # รอ 30 วินาที
+                    continue
                 # Update market data
                 self.update_market_data()
                 self.update_price_history()
@@ -173,7 +192,19 @@ class SmartArbitrageEngine:
                 
                 # Collect opportunities from all strategies
                 all_opportunities = []
-                
+                if self.portfolio_guardian:
+                    portfolio_status = self.portfolio_guardian.execute_portfolio_strategy()
+                    if portfolio_status['status'] == 'completed':
+                        print(f"📊 Portfolio: {portfolio_status['portfolio_health']} | "
+                            f"Net: ${portfolio_status['total_profit']:.1f} | "
+                            f"Risk: {portfolio_status['risk_score']:.0f}/100")
+                        
+                        # แสดงการ action ที่ทำ
+                        actions = portfolio_status.get('actions_executed', {})
+                        if actions.get('full_closes', 0) > 0:
+                            print(f"💰 Profit locked: {actions['full_closes']} positions, "
+                                f"${actions['total_profit_locked']:.1f}")
+                            
                 # 1. ARBITRAGE Opportunities
                 if self.strategies_enabled.get('arbitrage'):
                     arb_opportunities = self.scan_arbitrage_opportunities()
@@ -1095,6 +1126,34 @@ class SmartArbitrageEngine:
             }
         except Exception:
             return {'running': False, 'error': 'Status unavailable'}
+    
+    # 🆕 Portfolio Guardian Callback Methods
+    def on_profit_locked(self, message):
+        """Handle profit locked notifications from Portfolio Guardian"""
+        try:
+            print(f"💰 PROFIT LOCKED: {message}")
+            if self.on_signal_callback:
+                self.on_signal_callback(f"💰 PROFIT: {message}")
+        except Exception as e:
+            print(f"❌ Profit callback error: {e}")
+    
+    def on_hedge_recommendation(self, message):
+        """Handle hedge recommendations from Portfolio Guardian"""
+        try:
+            print(f"🛡️ HEDGE RECOMMENDED: {message}")
+            if self.on_signal_callback:
+                self.on_signal_callback(f"🛡️ HEDGE: {message}")
+        except Exception as e:
+            print(f"❌ Hedge callback error: {e}")
+    
+    def on_portfolio_error(self, message):
+        """Handle portfolio errors from Portfolio Guardian"""
+        try:
+            print(f"❌ PORTFOLIO ERROR: {message}")
+            if self.on_error_callback:
+                self.on_error_callback(f"❌ PORTFOLIO: {message}")
+        except Exception as e:
+            print(f"❌ Portfolio error callback error: {e}")
 
 # Maintain backward compatibility
 ArbitrageEngine = SmartArbitrageEngine

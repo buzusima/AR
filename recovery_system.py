@@ -92,6 +92,14 @@ class RecoverySystem:
         """Main recovery monitoring loop"""
         while self.running:
             try:
+                # 🚨 เพิ่มการเช็คตลาดใน Recovery System
+                if not self.mt5_conn.is_market_open():
+                    print("⏸️ RECOVERY PAUSED - Market CLOSED")
+                    time.sleep(60)  # รอ 1 นาที
+                    continue
+                    
+                print("🟢 RECOVERY ACTIVE - Market OPEN")
+
                 # Update losing positions
                 self.update_losing_positions()
                 

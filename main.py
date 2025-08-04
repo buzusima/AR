@@ -12,6 +12,12 @@ try:
 except ImportError:
     ENGINES_AVAILABLE = False
 import logging
+try:
+    from portfolio_guardian import MasterPortfolioManager
+    PORTFOLIO_GUARDIAN_AVAILABLE = True
+except ImportError:
+    PORTFOLIO_GUARDIAN_AVAILABLE = False
+    print("⚠️ Portfolio Guardian not available")
 
 class TriangularArbitrageGUI:
     def __init__(self):
@@ -64,6 +70,12 @@ class TriangularArbitrageGUI:
             if ENGINES_AVAILABLE and self.mt5_conn and self.mt5_conn.connected:
                 self.arbitrage_engine = ArbitrageEngine(self.mt5_conn)
                 
+                if hasattr(self.arbitrage_engine, 'portfolio_guardian') and self.arbitrage_engine.portfolio_guardian:
+                    self.arbitrage_engine.portfolio_guardian.set_callbacks(
+                    profit_callback=self.on_profit_locked,
+                    hedge_callback=self.on_hedge_recommendation,
+                    error_callback=self.on_portfolio_error
+                )
                 # Set up callbacks for GUI updates
                 self.arbitrage_engine.set_callbacks(
                     signal_callback=self.on_arbitrage_signal,
@@ -623,7 +635,19 @@ class TriangularArbitrageGUI:
         
         self.update_thread = threading.Thread(target=update_loop, daemon=True)
         self.update_thread.start()
-    
+    # เพิ่มใน class TriangularArbitrageGUI
+    def on_profit_locked(self, message):
+        """Handle profit locked notifications"""
+        self.log_message(f"💰 PROFIT: {message}")
+
+    def on_hedge_recommendation(self, message):
+        """Handle hedge recommendations"""
+        self.log_message(f"🛡️ HEDGE: {message}")
+
+    def on_portfolio_error(self, message):
+        """Handle portfolio errors"""
+        self.log_message(f"❌ PORTFOLIO ERROR: {message}")
+
     # Callback functions for Arbitrage Engine
     def on_arbitrage_signal(self, message):
         """Handle arbitrage signals"""
